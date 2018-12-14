@@ -1,0 +1,75 @@
+<view class="container" hidden="{{bannerFlag || trainFlag || searchFlag}}">
+  <!-- banner组件 start -->
+  <v-banner bind:banner="banner" />
+  <!-- banner组件 end -->
+
+  <!-- 搜索框 start -->
+  <view class='search-wrapper'>
+    <view class="search-btn" bindtap="searchTap">搜索内容</view>
+  </view>
+  <!-- 搜索框 end -->
+  
+  <!-- tab框 start -->  
+  <view class='tabs-wrapper'>
+    <view class='tabs-header'>
+      <text class="tabs-item fs99 {{currentTab==index ? 'active' : ''}}" wx:for="{{homeTab}}"  wx:key='{{index}}' wx:for-index="index" bindtap='tabsClick' data-idx="{{index}}">{{item}}</text>
+    </view>
+  </view>
+  <!-- tab框 end -->  
+
+  <!-- 在线培训 -->
+  <view class='tabs-content' hidden="{{currentTab!==0}}">
+    <!-- course子组件 start -->
+      <v-course bind:godetail="goDetail" bind:buy="goBuy" more="{{more}}" isOnline="{{isOnline}}" refresh="{{refresh}}" />
+    <!-- course子组件 end -->
+  </view>
+
+  <!-- 实操培训子组件 start -->
+  <view class='tabs-content' hidden="{{currentTab!==1}}">
+    <view class='nodata align-c fs99' wx:if="{{!train || train.length==0}}">
+      <view class='nodata-tips gap-350'>暂无数据</view>
+    </view>
+    <block wx:for="{{train}}" wx:key="index">
+      <v-train train="{{item}}" bind:traindetail="trainDetail" isOnline="{{isOnline}}" />
+    </block>
+  </view>
+  <!-- 实操培训子组件 end -->
+  
+  <!-- 合格证书 -->
+  <view class='tabs-content' hidden="{{currentTab!==2}}">
+    <v-cert certificates="{{certificates}}" />
+  </view>
+  <!-- 编辑按钮 -->
+  <view class='edit-wrapper' bindtap='change'>
+      <text class='iconfont icon-edit'></text>
+  </view>
+</view>
+
+<!-- 搜索 -->
+<view hidden="{{!searchFlag}}">
+  <v-search bind:close="close" bind:godetail="goDetail" isOnline="{{isOnline}}" bind:buy="goBuy" />
+</view>
+
+<!-- 在线培训充值弹出层 start -->
+<view wx:if="{{payShowFlag}}">
+  <v-pay bind:cancel="cancel" ccid="{{ccid}}" price="{{price}}" />
+</view>
+<!-- 在线培训充值弹出层 end -->
+<!-- 实操培训充值弹出层 start -->
+<view wx:if="{{payTrainFlag}}">
+  <v-pay bind:cancel="cancel" otid="{{otid}}" price="{{price}}" />
+</view>
+<!-- 实操培训充值弹出层 end -->
+
+<!-- banner详情 -->
+<view hidden="{{!bannerFlag}}">
+  <v-page-detail bannerdetail="{{bannerDetail}}" bind:back="back" />
+</view>
+<!-- 实操培训详情 -->
+<view hidden="{{!trainFlag}}">
+  <v-page-detail bannerdetail="{{bannerDetail}}" bind:back="back">
+    <view slot="pay" hidden="{{btnFlag}}">
+      <button data-discount="{{money}}" bindtap="payTrain">{{payFlag == 1 ? "已购" : '支付￥'+money }}</button>
+    </view>
+  </v-page-detail>
+</view>

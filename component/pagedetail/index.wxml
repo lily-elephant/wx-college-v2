@@ -1,0 +1,16 @@
+<!--component/bannerdetail/bannerDetail.wxml-->
+<view class="container">
+  <text class="back" bindtap="back"> ＜ </text>
+  <view wx:for="{{bannerdetail}}" wx:key="index" wx:for-index="index">
+    <view wx:if="{{item.type == 'picture'}}">
+      <image src='{{globalimgeurl}}{{item.path}}' mode='widthFix'></image>
+    </view>
+    <view class="text" wx:elif="{{item.type == 'text'}}">
+      {{item.text}}
+    </view>
+    <view wx:elif="{{item.type == 'video'}}">
+      <video id="myVideo" src="{{globalimgeurl}}{{item.path}}" binderror="listenerVideo"></video>
+    </view>
+  </view>
+  <slot name="pay"></slot>
+</view>

@@ -1,0 +1,48 @@
+/* component/pay/index.wxss */
+.modal-box{
+  position:fixed;
+  z-index: 4;
+  width:100%;
+  height:100%;
+  top:0px;
+  background:rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+.modal-body{
+  position:relative;
+}
+
+.modal-content{
+  margin:30% 60rpx 0;
+  padding: 50rpx;
+  background: #fff;
+  overflow: hidden;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+}
+.money{
+  padding: 20rpx 0;
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  line-height: 1;
+}
+.dollar{
+  font-size: 28rpx;
+}
+.money-count{
+  font-size: 48rpx;
+}
+.tips{
+  font-size: 24rpx;
+}
+.modal-foot{
+  padding: 40rpx 40rpx 0;
+  display: flex;
+  justify-content: space-around;
+}
+.modal-foot .btn-primary{
+  padding: 0 60rpx!important;
+  box-shadow: none;
+}

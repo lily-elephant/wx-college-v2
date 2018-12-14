@@ -1,0 +1,15 @@
+<!--component/train/index.wxml-->
+<view class="container" bindtap="goTrain">
+  <!-- 1是已购 0未购-->
+  <view class="train-tip">
+    <text>{{train.payflag == 1 ? "已购":"未购"}}</text>
+  </view>
+  <view class="train-wrapper">
+    <image src="{{globalimgeurl}}{{train.pic}}" class="train-img"></image>
+    <view class="train-content">
+      <view class="train-title">{{train.name}}</view>
+      <text class="train-count">已购人数：{{train.buycount}}</text>
+      <view wx:if="{{isOnline}}" class="train-price">¥ {{train.money}}</view>
+    </view>
+  </view>
+</view>

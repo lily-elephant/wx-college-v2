@@ -1,0 +1,45 @@
+/* component/search/index.wxss */
+@import "../course/index.wxss";
+
+.search-wrapper{
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 24rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+}
+.search-inp{
+  padding: 6rpx 30rpx;
+  line-height: 48rpx;
+  height: 48rpx;
+  min-height: 48rpx;
+  width: 100%;
+  background: #eee;
+  color: #333;
+  font-size: 28rpx;
+  border-radius: 30rpx;
+}
+.cancel-btn{
+  padding: 0!important;
+  line-height: 60rpx;
+  margin: 0 0 0 24rpx!important;
+  height: 60rpx;
+  width: 100rpx;
+  box-sizing: border-box;
+}
+.search-history,.search-result{
+  margin: 148rpx 24rpx 0;
+}
+.sub-title{
+  margin:0 0 24rpx;
+  padding: 0 0 0 20rpx;
+  line-height: 32rpx;
+  border-left: 8rpx solid #333;
+  font-size: 28rpx;
+  color: #666;
+}
+

@@ -1,0 +1,29 @@
+/* component/banner/index.wxss */
+.swiper-wrapper {
+  height: 420rpx;
+}
+
+.slide-image {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  height: 420rpx;
+}
+
+.swiper-wrapper .wx-swiper-dots.wx-swiper-dots-horizontal {
+  margin-bottom: 2rpx;
+}
+
+.swiper-wrapper .wx-swiper-dot {
+  border-radius: 0;
+  width: 56rpx;
+  display: inline-flex;
+  height: 6rpx;
+  margin-left: 10rpx;
+  justify-content: space-between;
+}
+
+.swiper-wrapper .wx-swiper-dot::before {
+  content: '';
+  flex-grow: 1;
+}

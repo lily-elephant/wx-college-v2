@@ -1,0 +1,15 @@
+<!--component/certificates/index.wxml-->
+  <view class='certifate' wx:if="{{certificates&&certificates.length>0}}">
+    <swiper class='cert-wrapper' current="{{currentIndex}}">
+      <block wx:for="{{certificates}}" wx:key="{{index}}">
+        <swiper-item class='cert-item'>
+          <image src="{{globalimgeurl}}{{item.picture}}" class="cert-image" />
+          <view class='certificatesLen'>({{index + 1 }}/{{certificates.length}})</view>
+          <view class='certificatesTxt'>{{item.name}}</view>
+        </swiper-item>
+      </block>
+    </swiper>
+    <text class='iconfont btn-arrow icon-arrow_l {{currentIndex==0 ? "disabled":""}}' bindtap='leftTap'></text>
+    <text class='iconfont btn-arrow icon-arrow_r {{currentIndex==(certificates.length-1) ? "disabled" : ""}}' bindtap='rightTap'></text>
+  </view>
+  <view wx:else="{{certificates.length==0}}">暂无数据</view>

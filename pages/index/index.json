@@ -1,0 +1,12 @@
+{
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "v-course": "../../component/course/index",
+    "v-banner": "../../component/banner/index",
+    "v-page-detail": "../../component/pagedetail/index",
+    "v-train": "../../component/train/index",
+    "v-pay": "../../component/pay/index",
+    "v-cert": "../../component/cert/index",
+    "v-search": "../../component/search/index"
+  }
+}

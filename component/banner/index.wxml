@@ -1,0 +1,8 @@
+<!--component/banner/index.wxml-->
+<swiper class='swiper-wrapper' indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-color="#c4c4c4" indicator-active-color="#8abcd1">
+  <block wx:for="{{bannerArr}}" wx:key='{{index}}'>
+    <swiper-item>
+      <image src="{{globalimgeurl}}{{item.picture}}" class="slide-image" bindtap='jump' data-detail='{{item}}'></image>
+    </swiper-item>
+  </block>
+</swiper>

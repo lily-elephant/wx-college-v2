@@ -1,0 +1,50 @@
+/* component/course/index.wxss */
+.container{
+  display: flex;
+  padding: 10rpx 0;
+}
+.course-img{
+  flex: 0 0 252rpx;
+  width: 252rpx;
+  height: 156rpx;
+}
+.course-content{
+  padding: 0 0 0 24rpx;
+}
+.course-title{
+  line-height: 1;
+  margin-bottom: 14rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.course-desc{
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-height: 32rpx;
+  height: 64rpx;
+  width: 100%;
+  font-size: 24rpx;
+  text-align: justify;
+  overflow: hidden;
+  margin-bottom: 10rpx;
+}
+.course-price{
+  font-size: 28rpx;
+}
+.now-price{
+  color: red
+}
+.old-price{
+  text-decoration-line: line-through;
+  padding-left: 15rpx;
+}
+.priceBtn{
+  float:right;
+  font-size:20rpx;
+  width:98rpx;
+  height:48rpx;
+}

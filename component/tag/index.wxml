@@ -1,0 +1,4 @@
+<!--component/tag/index.wxml-->
+<view class="container">
+  <text class="item" wx:for="{{tag}}" wx:key="index" bindtap="tapping" data-label="{{item}}">{{item}}</text>
+</view>

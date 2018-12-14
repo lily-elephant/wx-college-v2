@@ -1,0 +1,16 @@
+<!--component/pay/index.wxml-->
+<!-- 充值弹出层 -->
+  <view class="modal-box">
+    <view class="modal-body">
+      <view class="modal-content">
+        <text>您的账户余额</text>
+        <view class='money'>
+          <text class='dollar'>￥</text><text class='money-count'>{{remaining}}</text><view class='tips' hidden='{{enoughFlag}}'>（余额不足）</view>
+        </view>
+        <view class='modal-foot'>
+          <button class='btn-primary cancel' bindtap="cancel" size='mini'>取消</button>
+          <button class='btn-primary bgc3' size='mini' bindtap='confirm'>{{!enoughFlag ? "充值" : "确认支付"}}</button>
+        </view>
+      </view>
+    </view>
+  </view>

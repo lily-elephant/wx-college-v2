@@ -1,0 +1,47 @@
+/* component/certificates/index.wxss */
+@import "../../asset/font/iconfont.wxss";
+
+.cert-wrapper{
+  position: relative;
+  padding: 40rpx 0;
+  height: 650rpx;
+}
+.cert-image{
+  display: block;
+  margin: 0 auto;
+  width: 552rpx;
+  height: 386rpx;
+}
+.btn-arrow{
+  position: absolute;
+  top: 74%;
+  line-height: 96rpx;
+  font-size: 48rpx;
+  width: 42rpx;
+  height: 96rpx;
+  text-align: center;
+  color: #fff;
+  background: #aeaeae;
+}
+.icon-arrow_l{
+  left: 20rpx;
+}
+.icon-arrow_r{
+  right: 20rpx;
+}
+.disabled{
+  background: #eee;
+}
+.certificatesTxt{
+  width:100%;
+  margin:10rpx auto 30rpx;
+  text-align:center;
+}
+.certificatesLen{
+  width: 100%;
+  text-align: center;
+  font-size: 20rpx;
+  color:#999;
+  margin-top: 20rpx;
+}
+

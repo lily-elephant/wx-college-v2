@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "v-tag": "../tag/index",
+    "v-course": "../search/index",
+    "v-pay": "../pay/index"
+  }
+}
