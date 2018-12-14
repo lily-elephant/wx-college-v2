@@ -1,0 +1,14 @@
+.DS_Store
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+stats.json
+build/
+apps/.*
+apps/*/dist/
+proxy.js
+.vscode/
+.idea/
+/config/*
+package-lock.json
