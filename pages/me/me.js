@@ -121,6 +121,9 @@ Page({
       }
     })
   },
+  getUserInfo(e){
+    console.log(e)
+  },
   onShow: function () {
     var that = this;
     if (wx.getStorageSync('token')) {

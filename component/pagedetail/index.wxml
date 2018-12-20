@@ -1,9 +1,9 @@
 <!--component/bannerdetail/bannerDetail.wxml-->
 <view class="container">
-  <text class="back" bindtap="back"> ＜ </text>
+  <text class="back" bindtap="back" hidden="{{hidden}}"> ＜ </text>
   <view wx:for="{{bannerdetail}}" wx:key="index" wx:for-index="index">
     <view wx:if="{{item.type == 'picture'}}">
-      <image src='{{globalimgeurl}}{{item.path}}' mode='widthFix'></image>
+      <image src='{{globalimgeurl}}{{item.path}}' mode='widthFix' class="detail-img"></image>
     </view>
     <view class="text" wx:elif="{{item.type == 'text'}}">
       {{item.text}}

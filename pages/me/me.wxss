@@ -1,3 +1,10 @@
+.info-wrapper{
+  height: 64rpx;
+}
+.me-btn{
+  white-space: nowrap;
+}
+
 .me-top{
   display: flex;
   padding: 30rpx 40rpx;

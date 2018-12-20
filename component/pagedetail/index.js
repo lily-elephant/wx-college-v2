@@ -10,6 +10,10 @@ Component({
     bannerdetail: {
       type: Array,
       value: []
+    },
+    hidden: {
+      type: Boolean,
+      type: false
     }
   },
 

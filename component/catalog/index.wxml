@@ -1,0 +1,18 @@
+<!--component/catalog/index.wxml-->
+<view wx:for="{{course}}" wx:key="{{index}}" class='container' bindtap="detail" data-cid='{{item.cid}}'>
+  <view class='course-imgwrapper'>
+    <view class='must-study bgc3'>
+      <text class='must-study-cap'>{{item.islearn == 1 ? "已学" : "未学"}}</text>
+    </view>
+    <image src="{{globalimgeurl}}{{item.coursepicture}}" class='course-img'></image>
+    <!-- isbuy: 1未购买  0 购买 0 false  1  true -->
+  </view>
+  <view class='course-info'>
+    <view class='course-tit'>{{item.name}}</view>
+    <view class='course-visited'>
+      <v-visit viewcount="{{item.viewcount}}" />
+    </view>
+    <view wx:if="{{isOnline}}" class='course-price'>￥{{item.money}}</view>
+  </view>
+  <view wx:if="{{isOnline}}" class='{{item.isbuy ? "nobuy" : "buyed"}}' catchtap='pay' data-cid='{{item.cid}}' data-state='{{item.isbuy}}' data-price='{{item.money}}'>{{item.money == 0 ? "免费" : item.isbuy ? "购买" : "已购"}}</view>
+</view>

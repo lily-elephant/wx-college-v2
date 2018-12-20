@@ -1,0 +1,13 @@
+.container{
+  display: flex;
+  flex-direction: row;
+  align-items: center; /*交叉轴居中对齐*/
+}
+.visited-count{
+  color: #999;
+}
+.img-icon{
+  width: 46rpx;
+  height: 36rpx;
+  padding: 0 6rpx 0 0;
+}

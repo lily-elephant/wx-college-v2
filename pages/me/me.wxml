@@ -1,6 +1,10 @@
 <view class='me-top bgc3'>
-  <view class='avatar-wrapper' bindtap='changeAvatar'>
-    <image class='avatar' src='{{imgUrl}}'></image>
+  <view class="info-wrapper">
+    <v-button opentype="getUserInfo" bind:getinfo="getUserInfo">
+      <view slot="content" class="avatar-wrapper">
+        <image class='avatar' src='{{imgUrl}}' />
+      </view>
+    </v-button>
   </view>
   <view class='me-info' bindtap='goLogin' >
     <text class='me-name'>{{name == null ? "未填写" : name }}</text>

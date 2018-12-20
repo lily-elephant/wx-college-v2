@@ -17,7 +17,7 @@
   padding: 24rpx;
   text-align: justify;
 }
-image{
+.detail-img{
   display: block;
   width: 100%!important;
 }

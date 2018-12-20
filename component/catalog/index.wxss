@@ -1,0 +1,73 @@
+/* component/catalog/index.wxss */
+.container{
+  position: relative;
+  display: flex;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+.course-imgwrapper{
+  flex: 0 0 252rpx;
+  width: 252rpx;
+  height: 156rpx;
+}
+.course-img{
+  width: 252rpx;
+  height: 156rpx;
+}
+.course-info{
+  padding: 0 0 0 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.course-tit{
+  width: 100%;
+  font-size: 28rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.course-price{
+  color: #f63e3e;
+  font-size: 28rpx;
+}
+.nobuy,.buyed{
+  position: absolute;
+  bottom: 30rpx;
+  right: 0;
+  padding: 12rpx 30rpx;
+  line-height: 1;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 30rpx;
+}
+.nobuy{
+  background: #53add3;
+}
+.buyed{
+  color:#53add3;
+  border: 1rpx solid #53add3;
+}
+
+.must-study{
+  position: absolute;
+  top: 0rpx;
+  left: -10rpx;
+  z-index: 0;
+  padding: 4rpx;
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  color: #fffefe;
+  background: #53add3;
+}
+.must-study-cap{
+  display: block;
+  line-height: 50rpx;
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  border: 1rpx solid rgba(255,255,255,0.7);
+  text-align: center;
+  font-size: 20rpx;
+}

@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 20,
+			"current": 21,
 			"list": [
 				{
 					"id": -1,
@@ -159,7 +159,13 @@
 				{
 					"id": -1,
 					"name": "findpwd",
-					"pathName": "pages/findpwd/findpwd"
+					"pathName": "pages/findpwd/findpwd",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "me",
+					"pathName": "pages/me/me"
 				}
 			]
 		}

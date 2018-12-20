@@ -35,6 +35,20 @@ class PayModel extends HTTP {
       }
     })
   }
+  // 购买单节课程
+  payCourseUnit(money, cid){
+    return this.request({
+      url: 'consume',
+      data: {
+        money: that.data.price * 100,
+        transactionid: '0',
+        businesstype: '购买课程',
+        cid: cid,
+        ccid: '0'
+      },
+      method: 'POST'
+    })
+  }
 }
 
 export { 

@@ -17,6 +17,10 @@ Component({
     otid: {
       type: String,
       value: ''
+    },
+    cid: {
+      type: String,
+      value: ''
     }
   },
 
@@ -42,7 +46,6 @@ Component({
     // 弹出支付弹出层
     getPayPop() {
       payModel.payPop().then((res) => {
-        console.log(12)
         this.setData({
           remaining: res.data.data/100
         })
@@ -77,6 +80,16 @@ Component({
         }
         if(this.properties.otid){
           payModel.payTrain(price, this.properties.otid).then((res) => {
+            wx.showToast({
+              title: '购买成功',
+            })
+            this.cancel();
+          })
+        }
+        if (this.properties.cid) {
+          console.log(this.properties.cid)
+          return
+          payModel.payCourseUnit(price, this.properties.cid).then((res) => {
             wx.showToast({
               title: '购买成功',
             })

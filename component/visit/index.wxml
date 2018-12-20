@@ -1,0 +1,5 @@
+<!--component/visit/index.wxml-->
+<view class="container">
+  <image src='../../asset/img/visited.png' class='img-icon'></image>
+  <text class='visited-count'>{{viewcount == null ? "0" : viewcount}}次</text>
+</view>

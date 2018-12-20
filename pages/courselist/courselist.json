@@ -1,4 +1,9 @@
 {
   "navigationBarTitleText": "课程",
-  "enablePullDownRefresh": true
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "v-page": "../../component/pagedetail/index",
+    "v-catalog": "../../component/catalog/index",
+    "v-pay": "../../component/pay/index"
+  }
 }
