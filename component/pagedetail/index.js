@@ -1,4 +1,3 @@
-// component/bannerdetail/bannerDetail.js
 import {config} from '../../config.js'
 
 Component({
@@ -7,7 +6,7 @@ Component({
    */
   options: { multipleSlots: true },
   properties: {
-    bannerdetail: {
+    pageDetail: {
       type: Array,
       value: []
     },

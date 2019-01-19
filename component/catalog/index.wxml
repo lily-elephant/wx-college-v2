@@ -10,9 +10,11 @@
   <view class='course-info'>
     <view class='course-tit'>{{item.name}}</view>
     <view class='course-visited'>
-      <v-visit viewcount="{{item.viewcount}}" />
+      <v-visit src="{{src}}" view-count="{{item.viewcount}}" />
     </view>
     <view wx:if="{{isOnline}}" class='course-price'>￥{{item.money}}</view>
   </view>
-  <view wx:if="{{isOnline}}" class='{{item.isbuy ? "nobuy" : "buyed"}}' catchtap='pay' data-cid='{{item.cid}}' data-state='{{item.isbuy}}' data-price='{{item.money}}'>{{item.money == 0 ? "免费" : item.isbuy ? "购买" : "已购"}}</view>
+  <view class="btn-state">
+    <v-state is-online="{{isOnline}}" is-buy="{{item.isbuy}}" cid="{{item.cid}}" price="{{item.money}}" catch:pay="pay" />
+  </view>
 </view>

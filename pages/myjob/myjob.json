@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "v-job": "../../component/job/index",
+    "v-collect": "../../component/collect/index"
+  }
+}

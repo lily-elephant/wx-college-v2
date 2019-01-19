@@ -1,0 +1,10 @@
+@import '../../asset/font/iconfont.wxss';
+.container{
+  color: #999;
+}
+.on{
+  color: #53add3;
+}
+.container .icon-star{
+  font-size: 36rpx;
+}

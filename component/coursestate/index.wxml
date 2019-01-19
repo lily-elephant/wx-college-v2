@@ -1,0 +1,3 @@
+<view wx:if="{{isOnline}}" class='{{isBuy ? "nobuy" : "buyed"}}' catchtap='pay' data-cid='{{cid}}' data-state='{{isBuy}}' data-price='{{price}}'>
+{{money == 0 ? "免费" : isBuy ? "购买" : "已购"}}
+</view>

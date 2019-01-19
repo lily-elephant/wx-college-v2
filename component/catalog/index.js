@@ -27,6 +27,7 @@ Component({
    */
   data: {
     globalimgeurl: config.imgeurl,
+    src: '../../asset/img/visited.png'
   },
 
   /**
@@ -40,13 +41,7 @@ Component({
       })
     },
     pay(e){
-      const price = e.currentTarget.dataset.price
-      const state = e.currentTarget.dataset.state
-      if (price == 0 ||  state== 0 || !state){
-        this.detail(e)
-        return
-      }
-      this.triggerEvent('pay', e.currentTarget.dataset)
+      this.triggerEvent('pay', e.detail)
     }
   }
 })

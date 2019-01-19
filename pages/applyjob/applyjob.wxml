@@ -1,0 +1,13 @@
+<view class="container">
+  <block wx:for="{{jobArr}}" wx:key="index">
+    <v-job job-item="{{item}}">
+      <view slot="option" class="opt">
+        <view class="opt-apply" bindtap="meApply"><text class="iconfont icon-apply"></text>我要应聘</view>
+        <view class="opt-collect">
+          <v-collect collect-flag="{{item.collect}}" bind:collect="collectJob" />
+        </view>
+      </view>
+    </v-job>
+  </block>
+</view>
+

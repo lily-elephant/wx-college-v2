@@ -1,39 +1,45 @@
 // pages/coursedetail/coursedetail.js
+import { CourseModel } from '../../models/course.js'
+import { getDate, getTime } from '../../utils/util.js'
+const courseModel = new CourseModel();
 const app = getApp();
 Page({
   data: {
-    //isOnline: wx.getStorageSync("isOnline"),
+    visitCount: '../../asset/img/visited.png',
+    shoppingCar: '../../asset/img/shoppingcar.png',
+    payFlag: false,
     course: [],
     globalimgeurl: app.globalData.imgeurl,
     showCanvas:true,
-    sharebtn:true, 
     money:0,
     isbuy:'',
     videoContext:'',
-    cid:'',
-    remaining: 0, // 账户余额
-    hideFlag: true, // 充值弹出层默认隐藏
-    enoughFlag: false, // 余额不足文字默认隐藏
+    privilege: '登录',
+    cid:null,
   },
-  sharePic: function(e) {
-    this.cancel()
-    //console.log(e)
-    var name = e.currentTarget.dataset.name;
-    var brief = e.currentTarget.dataset.brief;
-    var picture = this.data.globalimgeurl + e.currentTarget.dataset.coursepicture;
+  // 购买
+  buy(){
+    this.setData({
+      payFlag: true
+    })
+  },
+  cancel: function () {
+    this.setData({
+      payFlag: false
+    })
+  },
+  // 生成海报
+  share(e) {
+    console.log(e)
+    var name = e.detail.name;
+    var brief = e.detail.brief;
+    var picture = e.detail.picture
     console.log(picture)
     var that = this 
     wx.downloadFile({
       url: picture,
       success: function(res) {
         console.log(res)
-        // var ben_brief = ""
-        // if (brief.length >= 50){
-        //   ben_brief = brief.slice(0, 50) + "..."
-        // }else{
-        //   ben_brief = brief 
-        // }
-
         let briefArray = [];
         //为了防止过长，分割字符串,每行18个
         for (let i = 0; i < brief.length / 18; i++) {
@@ -45,7 +51,6 @@ Page({
           }else{
             briefArray.push(brief.substr(i * 18, 18));
           }
-          
         }
 
         if (res.statusCode === 200) {
@@ -58,24 +63,17 @@ Page({
           ctx.drawImage(res.tempFilePath, 0, 0, 300, 150)
 
           // 作者名称
-          //ctx.setTextAlign('center')    // 文字居中
           ctx.setFillStyle('#333333')  // 文字颜色：黑色
-          ctx.setFontSize(16)         // 文字字号：22px
+          ctx.setFontSize(16)         // 文字字号：16px
           ctx.fillText(name, 16,180)
-
-          //ctx.setFillStyle('#666666')  // 文字颜色：黑色
-          //ctx.setFontSize(12)
-          //ctx.fillText(ben_brief, 16, 210)
 
           var yOffset = 210;
           briefArray.forEach(function (value) {
             ctx.setFontSize(12);
             ctx.setFillStyle('#666666');
-            //canvasCtx.setTextAlign('left');
             ctx.fillText(value, 16, yOffset);
             yOffset += 25;
           });
-
 
           ctx.stroke()
           ctx.drawImage("../../asset/img/qrcode.jpg", 234, 234, 50, 50)
@@ -96,14 +94,11 @@ Page({
               destHeight: 300,
               canvasId: 'mycanvans',
               success: function (res) {
-                //console.log("get tempfilepath(success) is:",)
+                console.log("get tempfilepath(success) is:",)
                 that.data.tempFilePath = res.tempFilePath
-                that.setData({
-                  sharebtn: false
-                })
               },
               fail: function () {
-                //console.log('get tempfilepath is fail')
+                console.log('get tempfilepath is fail')
               }
             })
           })
@@ -111,36 +106,29 @@ Page({
       }
     })
   },
-  close:function(){
-    var that = this ;
-    that.setData({
-      showCanvas: true,
-      sharebtn: true
-    })
-  },
-  save: function (){
-    var that = this
-    //将图片保存在系统相册中(应先获取权限，)
-    wx.saveImageToPhotosAlbum({
-      filePath: that.data.tempFilePath  ,
-      success(res) {
-        //console.log("save photo is success")
-        that.setData({
-          showCanvas:true,
-          sharebtn: true
-        })
-        wx.showToast({
-          title: '保存成功',
-        })
-      },
-      fail: function () {
-        //console.log("save photo is fail")
-      }
+  close(){
+    this.setData({
+      showCanvas: true
     })
   },
   //显示对话框
   showModal: function() {
-    // 显示遮罩层
+    this.animationFn(()=> {
+      this.setData({
+        showModalStatus: true
+      })
+    })
+  },
+  //隐藏对话框
+  cancelShare() {
+    this.animationFn(null, ()=> {
+      this.setData({
+        showModalStatus: false
+      })
+    })
+  },
+  // animation动画
+  animationFn(showFn, hideFn) {
     var animation = wx.createAnimation({
       duration: 200,
       timingFunction: "linear",
@@ -149,38 +137,15 @@ Page({
     this.animation = animation
     animation.translateY(300).step()
     this.setData({
-      animationData: animation.export(),
-      showModalStatus: true
+      animationData: animation.export()
     })
-    setTimeout(function() {
+    showFn && showFn();
+    setTimeout(function () {
       animation.translateY(0).step()
       this.setData({
         animationData: animation.export()
       })
-    }.bind(this), 200)
-  },
-  cancel: function() {
-    this.hideModal()
-  },
-  //隐藏对话框
-  hideModal: function() {
-    // 隐藏遮罩层
-    var animation = wx.createAnimation({
-      duration: 200,
-      timingFunction: "linear",
-      delay: 0
-    })
-    this.animation = animation
-    animation.translateY(300).step()
-    this.setData({
-      animationData: animation.export(),
-    })
-    setTimeout(function() {
-      animation.translateY(0).step()
-      this.setData({
-        animationData: animation.export(),
-        showModalStatus: false
-      })
+      hideFn && hideFn();
     }.bind(this), 200)
   },
   //去登录
@@ -189,166 +154,117 @@ Page({
       url: '../login/login',
     })
   },
-  //去购买
-  gopay:function(e){
-    if (!wx.getStorageSync('token')) {
-      wx.navigateTo({
-        url: '../login/login',
-      })
-    } else {
-      let state = e.currentTarget.dataset.state;
-      let price = e.currentTarget.dataset.price;
-      let cid = e.currentTarget.dataset.cid;
-      // 如果已经购买
-      if (price == 0 || !state) {
-        //不做处理
-      } else {
-        this.payPop(state, price, cid)
-      }
-    }
-
-  },
-  // 点击购买或者图片弹出支付弹出层
-  payPop: function (state, price, cid) {
-    if (state == '1') { // 0 已购 1 未购
-      this.getBalance()
-      this.data.price = price
-      this.data.cid = cid
-      if (this.data.remaining >= price) {
-        this.setData({
-          hideFlag: false, // 弹窗显示
-          enoughFlag: false // 不提示余额不足
-        })
-      } else {
-        this.setData({
-          hideFlag: false,
-          enoughFlag: true // 提示余额不足
-        })
-      }
-    }
-  },
-  // 关闭弹出层
-  close_bottom: function () {
-    this.setData({
-      hideFlag: true
-    })
-  },
-  confirm: function () {
-    var that = this
-    if (that.data.enoughFlag) {
-      that.setData({
-        hideFlag: true
-      })
-      wx.navigateTo({
-        url: '../recharge/recharge',
-      })
-    } else {
-      this.pay();
-    }
-  },
-  pay: function () {
-    var that = this;
-    wx.request({
-      url: app.globalData.url + 'consume',
-      method: 'POST',
-      data: {
-        money: that.data.price * 100,
-        transactionid: '0',
-        businesstype: '购买课程',
-        cid: that.data.cid,
-        ccid: '0'
-      },
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Token': wx.getStorageSync('token')
-      },
-      success: function (res) {
-        if (res.data.code == '200') {
-          wx.showToast({
-            title: '购买成功',
-          })
-          that.close_bottom()
-          that.onShow()
-        }
-      }
-    })
-  },
-
-  //获取当前余额
-  getBalance: function () {
-    var that = this;
-    wx.request({
-      url: app.globalData.url + 'getbalance',    //不带token
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Token': wx.getStorageSync('token')
-      },
-      success: function (res) {
-        //console.log(res.data.data)
-        if (res.data.data / 100 >= that.data.price) {
-          that.setData({
-            hideFlag: false, // 弹窗显示
-            enoughFlag: false // 不提示余额不足
-          })
-        } else {
-          that.setData({
-            hideFlag: false,
-            enoughFlag: true // 提示余额不足
-          })
-        }
-        that.setData({
-          remaining: res.data.data / 100
-        })
-      }
-    })
-  },
-  
+  // 生命周期
   onLoad: function (options){
-    var that = this 
-    that.setData({
+    this.setData({
       isOnline: wx.getStorageSync("isOnline")
     })
-    that.data.cid = options.cid 
+    this.data.cid = options.cid
   },
   onShow: function() {
     var that = this;
     that.setData({
       show01: false,
       show02: true,
-      show03: true 
     })
-    wx.request({
-      url: app.globalData.url + 'course/getcoursedetail',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Token': wx.getStorageSync('token')
-      },
-      data: {
-        cid: that.data.cid 
-      },
-      success: function(res) {
-        //console.log(res.data.data)
-        if (res.data.code == 200) {
-          that.data.money = res.data.data[0].money 
-          that.data.isbuy = res.data.data[0].isbuy 
-          var article = res.data.data[0].article
-          var obj = JSON.parse(article);
-          that.setData({
-            course: res.data.data[0],
-            obj: obj
+    this.getDetail()
+  },
+  getDetail(){
+    courseModel.getCourseDetail(this.data.cid).then(res => {
+      if (res.data.code == 200) {
+        this.data.money = res.data.data[0].money
+        this.data.isbuy = res.data.data[0].isbuy
+        const article = JSON.parse(res.data.data[0].article)
+        this.setData({
+          course: res.data.data[0],
+          article: article
+        })
+        // 如果token存在，即已登录状态，才储存浏览历史
+        if (wx.getStorageSync("token")){
+          let that = this
+          let date = getDate()
+          let time = getTime()
+          let historyArr = []
+          if (!wx.getStorageSync('visited')) {
+            let now_data = {
+              time: time,
+              data: that.data.course
+            }
+            // 今天的数据，没有时插入
+            let sub_data = {
+              date: date,
+              films: []
+            }
+            sub_data.films.push(now_data)
+            historyArr.push(sub_data)
+            wx.setStorage({
+              key: 'visited',
+              data: historyArr,
+              success: function (res) {
+                console.log(res)
+                console.log('----set----')
+              }
+            })
+            return
+          }
+          wx.getStorage({
+            key: 'visited',
+            success: function (res) {
+              historyArr = res.data
+              console.log('----获取缓存----')
+              console.log(res.data)
+              // 当前的数据
+              let now_data = {
+                time: time,
+                data: that.data.course
+              }
+              // 今天的数据，没有时插入
+              let sub_data = {
+                date: date,
+                films: []
+              }
+              sub_data.films.push(now_data)
+              if (historyArr.length == 0) { // 判断是否为空
+                console.log('----为空插入----')
+                historyArr.push(sub_data)
+              } else if ((historyArr[0].date == date)) { //判断第一个是否为今天
+                console.log('----今日插入----')
+                console.log(historyArr[0].films.length)
+                for (var i = 0; i < historyArr[0].films.length; i++) {
+                  // 如果存在则删除，添加最新的
+                  if (historyArr[0].films[i].data.cid == that.data.course.cid) {
+                    historyArr[0].films.splice(i, 1)
+                  }
+                }
+                historyArr[0].films.push(now_data)
+              } else { // 不为今天(昨天)插入今天的数据
+                console.log('----昨日插入今日----')
+                historyArr.push(sub_data)
+              }
+              wx.setStorage({
+                key: 'visited',
+                data: historyArr,
+                success: function (res) {
+                  console.log(res)
+                  console.log('----设置成功----')
+                }
+              })
+              console.log(historyArr)
+            },
+            fail: function (res) {
+              console.log('----获取失败----')
+              console.log(res)
+            }
           })
         }
       }
     })
   },
-
   // 是否登录 && 是否购买  
   // 否 视频时长设置为10秒 
   //  播放成功回调后   未登录 提示登录  未购买 提示购买   
   //
-  listen_play:function(e){
+  listenPlay:function(e){
     var currentTime = e.detail.currentTime ; 
     var duration = e.detail.duration; 
     if (duration >= 10 && currentTime > 10){
@@ -367,7 +283,7 @@ Page({
         that.setData({
           show01: true,
           show02: false,
-          show03: true 
+          privilege: '登录' 
         })
       }else{
         if(that.data.isbuy == 1){
@@ -375,14 +291,13 @@ Page({
           this.data.videoContext.pause(); 
           that.setData({
             show01: true,
-            show02: true,
-            show03: false
+            show02: false,
+            privilege: '购买'
           })
         }else{
           that.setData({
             show01: false,
             show02: true,
-            show03: true
           })
         }
       }
@@ -390,7 +305,6 @@ Page({
       that.setData({
         show01: false,
         show02: true,
-        show03: true
       })
     }
 

@@ -1,6 +1,7 @@
 {
   "component": true,
   "usingComponents": {
-    "v-visit": "../visit/index"
+    "v-visit": "../visit/index",
+    "v-state": "../coursestate/index"
   }
 }

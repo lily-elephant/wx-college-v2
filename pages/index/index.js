@@ -25,18 +25,30 @@ Page({
     payFlag: 0, // 未付
     money: null, //支付的钱数
     payShowFlag: false, // 在线培训pay弹出层
-    payTrainFlag: false, // 实操培训pay弹出层
+    payTrainFlag: false, // 训练营pay弹出层
     price: null, // 价格
     ccid: null, // ccid
     otid: null, // otid
     globalimgeurl: config.imgeurl,
-    homeTab: ['在线培训', '实操培训', '合格证书'], //tab栏
+    homeTab: ['在线培训', '管家训练营', '晋级体系'], //tab栏
     currentTab: 0, // 默认第一个tab 
     name: '', //搜索课程名字
     certificates: [],
     loading: false,
     more: '', // 加载更多在线培训
     refresh: '', // 刷新
+    upSystem: [], // 晋级体系数据
+    noticeFlag: false, // notice
+    infos: [
+      { label: '张阿姨刚刚和雇主王先生在平台签约' },
+      { label: '李阿姨刚刚和雇主张先生在平台签约' },
+      { label: '宋阿姨刚刚和雇主白先生在平台签约' }
+    ]
+  },
+  closeNotice(){
+    this.setData({
+      noticeFlag: true
+    })
   },
   // 测试使用Promise.all获取数据
   getAllData() {
@@ -51,27 +63,7 @@ Page({
       currentTab: e.currentTarget.dataset.idx
     })
   },
-  //搜索框内容
-  // searchContent: function(e) {
-  //   var that = this;
-  //   that.setData({
-  //     name: e.detail.value
-  //   })
-  // },
-  // //搜索课程
-  // searchName: function(e) {
-  //   var that = this;
-  //   var name = that.data.name;
-  //   if (name != '' && name != undefined) {
-  //     wx.navigateTo({
-  //       url: '../searchList/searchList?name=' + name
-  //     })
-  //   } else {
-  //     wx.showToast({
-  //       title: '搜索不能为空！',
-  //     })
-  //   }
-  // },
+  
   // 点击搜索
   searchTap(){
     this.setData({

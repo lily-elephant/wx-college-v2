@@ -10,6 +10,6 @@ App({
     //url: "http://192.168.1.80:8888/",
     //imgeurl: "http://47.94.103.215:8080/res",
     //qrcode:"http://47.94.103.215:8080/res/images/qrcode.jpg"
-    versionCode:"version109"
+    versionCode:"version110"
   }
 })

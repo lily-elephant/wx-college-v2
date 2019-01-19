@@ -1,0 +1,40 @@
+.container button{
+  background:#fff;
+  font-size:16px;
+  color:#333;
+  height:50px;
+  line-height:50px;
+}
+button::after{
+  border: none;
+  border-radius: 0!important;
+}
+button{
+  border:none;
+  border-radius: 0!important;
+}
+.send{
+  border-bottom: 1px solid #e6e6e6;
+}
+.cancle{
+  border-top: 20rpx solid #eee;
+}
+
+.canvas-wrapper{
+  width: 300px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  position:absolute;
+  left:50%;
+  top:-100%;
+  transform: translate(-50%,-50%);
+  z-index: 9999999;
+}
+
+.close{
+  width: 56rpx;
+  height: 56rpx;
+  position:absolute;
+  right:0;
+  z-index:999;
+}

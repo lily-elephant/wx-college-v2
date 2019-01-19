@@ -1,16 +1,18 @@
-<!--component/bannerdetail/bannerDetail.wxml-->
 <view class="container">
-  <text class="back" bindtap="back" hidden="{{hidden}}"> ＜ </text>
-  <view wx:for="{{bannerdetail}}" wx:key="index" wx:for-index="index">
+  <view class="back" bindtap="back" hidden="{{hidden}}">
+    <text class="iconfont icon-arrow_l"></text>
+  </view>
+  <view wx:for="{{pageDetail}}" wx:key="index" wx:for-index="index">
     <view wx:if="{{item.type == 'picture'}}">
       <image src='{{globalimgeurl}}{{item.path}}' mode='widthFix' class="detail-img"></image>
     </view>
-    <view class="text" wx:elif="{{item.type == 'text'}}">
+    <text decode="{{true}}" class="text" wx:elif="{{item.type == 'text'}}">
       {{item.text}}
-    </view>
+    </text>
     <view wx:elif="{{item.type == 'video'}}">
       <video id="myVideo" src="{{globalimgeurl}}{{item.path}}" binderror="listenerVideo"></video>
     </view>
   </view>
   <slot name="pay"></slot>
 </view>
+<!-- 可应用wxs -->

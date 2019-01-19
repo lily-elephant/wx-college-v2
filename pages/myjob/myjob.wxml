@@ -1,0 +1,38 @@
+<view class="tab-header">
+  <view class="{{index==currentTab ? 'active': ''}}" bindtap="tabHandle" wx:for="{{tabHeader}}" wx:key="index" data-idx="{{index}}">
+    {{item}}
+  </view>
+</view>
+<view class="tab-content" hidden="{{currentTab!=0}}">
+  <view class="self-introduce">
+    <view class="resume-title">自我介绍</view>
+    <view>自我介绍内容</view>
+  </view>
+  <view class="job-experience">
+    <view class="resume-title">工作经验</view>
+    <block wx:for="{{experiences}}">
+      <view class="job-experience-item">
+        {{item.label}}
+      </view>
+    </block>
+  </view>
+  <view class="iconfont icon-add"></view>
+</view>
+<view class="tab-content" hidden="{{currentTab!=1}}">
+  <block wx:for="{{applyedArr}}" wx:key="index">
+    <v-job job-item="{{item}}">
+      <view slot="option" class="opt">
+        <view class="opt-apply" bindtap="meApply">
+          <text class="iconfont icon-apply"></text>我要应聘</view>
+        <view class="opt-collect">
+          <v-collect collect-flag="{{item.collect}}" bind:collect="collectJob" />
+        </view>
+      </view>
+    </v-job>
+  </block>
+</view>
+<view class="tab-content" hidden="{{currentTab!=2}}">
+  <block wx:for="{{collectArr}}" wx:key="index">
+    <v-job job-item="{{item}}" />
+  </block>
+</view>

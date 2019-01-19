@@ -1,7 +1,7 @@
 <!--component/opendata/index.wxml-->
 <button
   class="btn"
-  open-type="{{opentype}}"
+  open-type="{{openType}}"
   bindgetuserinfo="bindGetUserInfo"
 >
   <slot name="content"></slot>

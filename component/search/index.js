@@ -47,7 +47,7 @@ Component({
         resultFlag: true,
         value: e.detail.value
       })
-      this.onLoadCourse(this.data.pageindex, this.data.value);
+      this.getSearchList(this.data.value);
       if (!wx.getStorageSync('history')){
         this.setData({
           historyArr: []
@@ -75,25 +75,28 @@ Component({
       this.triggerEvent('buy', e.currentTarget.dataset);
     },
     //获取在线培训
-    onLoadCourse(pageindex,q) {
+    getSearchList(q) {
       // Promise的方式
-      this.data.loading = true;
-      courseModel.getCourse(pageindex, q).then(res => {
-        this.setMoreData(res.data.data);
-        this.setTotal(res.data.count);
-        this.data.loading = false;
+      // this.data.loading = true;
+      courseModel.getSearchResult(q).then(res => {
+        this.setData({
+          course: res.data.data
+        })
+        // this.setMoreData(res.data.data);
+        // this.setTotal(res.data.count);
+        // this.data.loading = false;
       })
     },
     // 加载更多在线培训课程
-    _loadMore() {
-      if (this.data.loading) {
-        return
-      }
-      if (this.hasMore()) {
-        this.data.pageindex += 1
-        this.onLoadCourse(this.data.pageindex, this.data.value)
-      }
-    },
+    // _loadMore() {
+    //   if (this.data.loading) {
+    //     return
+    //   }
+    //   if (this.hasMore()) {
+    //     this.data.pageindex += 1
+    //     this.getSearchList(this.data.pageindex, this.data.value)
+    //   }
+    // },
     
     // 点击标签
     onTag(e){
@@ -101,7 +104,7 @@ Component({
         value: e.detail.label,
         resultFlag: true
       })
-      this.onLoadCourse(this.data.pageindex, this.data.value)
+      this.getSearchList(this.data.value)
     },
     // 点击取消
     cancel(){

@@ -1,0 +1,53 @@
+.tab-header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 24rpx 0;
+  border-bottom: 1px solid #eee;
+}
+.tab-header .active{
+  color: #53add3;
+}
+.tab-content{
+  padding: 0 24rpx;
+}
+.icon-add{
+  position: fixed;
+  bottom: 80rpx;
+  right: 60rpx;
+  line-height: 70rpx;
+  height: 70rpx;
+  width: 70rpx;
+  border-radius: 50%;
+  text-align: center;
+  color: #fff;
+  background: #53add3;
+  font-size: 40rpx;
+}
+.opt{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0 0;
+}
+.opt-apply{
+  color: #8abcd1;
+}
+.opt-apply .icon-apply{
+  margin: 0 10rpx 0 0;
+}
+.resume-title{
+  font-size: 36rpx;
+}
+.self-introduce{
+  padding: 24rpx 0;
+  border-bottom: 1px solid #eee;
+}
+.job-experience{
+  padding: 24rpx 0;
+  border-bottom: 1px solid #eee;  
+}
+.job-experience-item{
+  /* padding: 0 0 12rpx; */
+}

@@ -1,0 +1,13 @@
+<view class="container">
+  <view class="job-title">
+    <view class="job-catagory">职位类别：{{jobItem.catagory}}</view>
+    <view class="job-salary">￥{{jobItem.salary}}</view>
+  </view>
+  <view class="job-publisher">发布人：{{jobItem.emphone}}</view>
+  <view class="job-publisher">发布时间：{{jobItem.create_time}}</view>
+  <view class="job-need">
+    要求：
+    <view class="job-need-content"></view>
+  </view>
+  <slot name="option"></slot>
+</view>

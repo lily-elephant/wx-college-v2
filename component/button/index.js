@@ -7,8 +7,9 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    opentype: {
-      type: String
+    openType: {
+      type: String,
+      value: ''
     }
   },
 

@@ -1,0 +1,14 @@
+.nobuy,.buyed{
+  padding: 12rpx 30rpx;
+  line-height: 1;
+  border-radius: 3px;
+  color: #fff;
+  font-size: 30rpx;
+}
+.nobuy{
+  background: #53add3;
+}
+.buyed{
+  color:#53add3;
+  border: 1rpx solid #53add3;
+}

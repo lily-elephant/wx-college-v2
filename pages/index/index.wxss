@@ -2,6 +2,10 @@ page {
   background: #f9f9f9;
 }
 
+.container{
+  position: relative;
+}
+
 .search-wrapper {
   padding: 24rpx;
 }
@@ -75,3 +79,55 @@ page {
 .edit-wrapper .icon-edit{
   font-size: 42rpx;
 }
+.notice-wrapper{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.9);
+  width: 100%;
+  line-height: 60rpx;
+  height: 60rpx;
+}
+
+.notice-label{
+  font-size: 30rpx;
+  padding: 0 0 0 20rpx;
+}
+.close-notice{
+  position: absolute;
+  top: 0rpx;
+  right: 10rpx;
+  z-index: 2;
+  padding: 10rpx;
+  font-size: 36rpx;
+}
+/*首页跑马灯效果*/
+@keyframes around {
+  from {
+   margin-left: 100%;
+  }
+  to {
+   /* var接受传入的变量 */
+   margin-left: var(--marqueeWidth--);
+  }
+ }
+ 
+.marquee_container{
+  position: relative;
+  margin-top:0rpx;
+}
+.marquee_container:hover{
+  /* 不起作用 */
+  animation-play-state: paused;
+}
+.marquee_text{
+  color:#333;
+  font-size: 30rpx;
+  display: inline-block;
+  white-space: nowrap;
+  animation-name: around;
+  animation-duration: 10s;  /*过渡时间*/
+  animation-iteration-count: infinite;
+  animation-timing-function:linear;
+}
+/*首页跑马灯效果*/

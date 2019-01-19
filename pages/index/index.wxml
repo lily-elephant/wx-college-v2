@@ -3,6 +3,30 @@
   <v-banner bind:banner="banner" />
   <!-- banner组件 end -->
 
+  <!-- 公告字幕单条 start -->
+  <view class="notice-wrapper" hidden="{{noticeFlag}}">
+    <view wx:if="{{infos.length==1}}" class="marquee_container" style="--marqueeWidth--:-12em">
+        <view class="marquee_text">{{infos[0].label}}</view>
+    </view>
+    <!-- 公告字幕多条 start -->
+    <swiper
+    wx:else
+    class="notice"
+    autoplay="{{true}}"
+    circular="{{true}}"
+    interval="5000" 
+    duration="3000"
+  >
+    <block wx:for="{{infos}}">
+      <swiper-item>
+        <view class="notice-label">{{item.label}}</view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+<text class="iconfont close-notice icon-close" bindtap="closeNotice"></text>
+  <!-- 公告字幕多条 end -->
+
   <!-- 搜索框 start -->
   <view class='search-wrapper'>
     <view class="search-btn" bindtap="searchTap">搜索内容</view>
@@ -20,24 +44,25 @@
   <!-- 在线培训 -->
   <view class='tabs-content' hidden="{{currentTab!==0}}">
     <!-- course子组件 start -->
-      <v-course bind:godetail="goDetail" bind:buy="goBuy" more="{{more}}" isOnline="{{isOnline}}" refresh="{{refresh}}" />
+      <v-course bind:godetail="goDetail" bind:buy="goBuy" more="{{more}}" is-online="{{isOnline}}" refresh="{{refresh}}" />
     <!-- course子组件 end -->
   </view>
 
-  <!-- 实操培训子组件 start -->
+  <!-- 管家训练营子组件 start -->
   <view class='tabs-content' hidden="{{currentTab!==1}}">
     <view class='nodata align-c fs99' wx:if="{{!train || train.length==0}}">
       <view class='nodata-tips gap-350'>暂无数据</view>
     </view>
     <block wx:for="{{train}}" wx:key="index">
-      <v-train train="{{item}}" bind:traindetail="trainDetail" isOnline="{{isOnline}}" />
+      <v-train train="{{item}}" bind:traindetail="trainDetail" is-online="{{isOnline}}" />
     </block>
   </view>
-  <!-- 实操培训子组件 end -->
+  <!-- 管家训练营子组件 end -->
   
-  <!-- 合格证书 -->
+  <!-- 晋级体系 -->
   <view class='tabs-content' hidden="{{currentTab!==2}}">
-    <v-cert certificates="{{certificates}}" />
+    <v-page-detail page-detail="{{upSystem}}" hidden="{{true}}" />
+    <!-- <v-cert certificates="{{certificates}}" /> -->
   </view>
   <!-- 编辑按钮 -->
   <view class='edit-wrapper' bindtap='change'>
@@ -47,7 +72,7 @@
 
 <!-- 搜索 -->
 <view hidden="{{!searchFlag}}">
-  <v-search bind:close="close" bind:godetail="goDetail" isOnline="{{isOnline}}" bind:buy="goBuy" />
+  <v-search bind:close="close" bind:godetail="goDetail" is-online="{{isOnline}}" bind:buy="goBuy" />
 </view>
 
 <!-- 在线培训充值弹出层 start -->
@@ -63,11 +88,11 @@
 
 <!-- banner详情 -->
 <view hidden="{{!bannerFlag}}">
-  <v-page-detail bannerdetail="{{bannerDetail}}" bind:back="back" />
+  <v-page-detail page-detail="{{bannerDetail}}" bind:back="back" />
 </view>
 <!-- 实操培训详情 -->
 <view hidden="{{!trainFlag}}">
-  <v-page-detail bannerdetail="{{bannerDetail}}" bind:back="back">
+  <v-page-detail page-detail="{{bannerDetail}}" bind:back="back">
     <view slot="pay" hidden="{{btnFlag}}">
       <button data-discount="{{money}}" bindtap="payTrain">{{payFlag == 1 ? "已购" : '支付￥'+money }}</button>
     </view>

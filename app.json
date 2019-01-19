@@ -28,8 +28,9 @@
     "pages/interviewrecord/interviewrecord",
     "pages/giveup/giveup",
     "pages/psersonalityTest/psersonalityTest",
-    "pages/psersonalityTest2/psersonalityTest2"
-    
+    "pages/psersonalityTest2/psersonalityTest2",
+    "pages/applyjob/applyjob",
+    "pages/myjob/myjob"
     
   ],
   "window":{
@@ -53,10 +54,10 @@
         "text": "学习"
       },
       {
-        "pagePath": "pages/service/service",
+        "pagePath": "pages/applyjob/applyjob",
         "iconPath": "asset/img/service.png",
         "selectedIconPath": "asset/img/service_active.png",
-        "text": "合同"
+        "text": "求职"
       },
       {
         "pagePath": "pages/me/me",

@@ -1,0 +1,3 @@
+<view class="container {{collectFlag ? 'on': ''}}" bindtap="collect">
+  <text class="iconfont icon-star"></text>
+</view>

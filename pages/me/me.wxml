@@ -1,6 +1,6 @@
 <view class='me-top bgc3'>
   <view class="info-wrapper">
-    <v-button opentype="getUserInfo" bind:getinfo="getUserInfo">
+    <v-button open-type="getUserInfo" bind:getinfo="getUserInfo">
       <view slot="content" class="avatar-wrapper">
         <image class='avatar' src='{{imgUrl}}' />
       </view>
@@ -21,7 +21,7 @@
   </view>
   <view class='row'>
     <view class='myinterview'><image src='../../asset/img/interview.png' class='myinter'></image></view>
-    <view class='caption bordbd9' bindtap='goOrder'>我的面试<text class='iconfont icon-arrow_r fs99 f-right'></text></view>
+    <view class='caption bordbd9' bindtap='goOrder'>我的求职<text class='iconfont icon-arrow_r fs99 f-right'></text></view>
   </view>
   <view class='row'>
     <text class='iconfont row-l icon-email'></text>

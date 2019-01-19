@@ -20,12 +20,12 @@
       <view class='nodata align-c fs99' wx:if="{{course.length == 0}}">暂无数据</view>
       <!-- 数据存在 -->
       <view class='container' wx:else>
-        <v-catalog isOnline="{{isOnline}}" course="{{course}}" bind:pay="buy" />
+        <v-catalog is-online="{{isOnline}}" course="{{course}}" bind:pay="buy" />
       </view>
     </view>
     <!-- 介绍content -->
     <view class='tabs-content' hidden="{{currentTab!==1}}">
-      <v-page bannerdetail="{{intro}}" hidden="{{true}}" />
+      <v-page page-detail="{{intro}}" hidden="{{true}}" />
     </view>
     <view class='align-c btn-wrapper'>
       <button size='mini' class='btn-primary bgc3' bindtap='goExam'>已学完，去考试</button>

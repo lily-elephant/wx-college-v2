@@ -1,4 +1,8 @@
 // pages/online/online.js
+import { ExamModel } from '../../models/exam.js'
+import { config } from '../../config.js'
+const examModel = new ExamModel();
+
 const app = getApp();
 Page({
   data: {
@@ -19,7 +23,8 @@ Page({
       index: _index,
       ccid: _ccid
     })
-    that.getExamCount(that.data.ccid);
+    console.log(that.data.ccid)
+    that._getExamCount(that.data.ccid);
   },
   /**
    * 去考试
@@ -34,28 +39,15 @@ Page({
     })
   },
   // 获取考试题目数目
-  getExamCount:function(){
-    var that = this;
-    wx.request({
-      url: app.globalData.url + 'course/gettestcontent',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Token': wx.getStorageSync('token')
-      },
-      data: {
-        ccid: that.data.ccid
-      },
-      success: function (res) {
-        if (res.data.code == 200) {
-          let data = res.data.data;
-          that.setData({
-            count:data.count,
-            single: data.single,
-            multiple: data.multiple
-            
-          })
-        }
+  _getExamCount:function(){
+    examModel.getExamCount(this.data.ccid).then(res => {
+      if(res.data.code == config.errorok){
+        let data = res.data.data;
+        this.setData({
+          count: data.count,
+          single: data.single,
+          multiple: data.multiple
+        })
       }
     })
   },
@@ -83,7 +75,7 @@ Page({
               objectArray: _objectArray,
               ccid: _data[0]['ccid']
             })
-            that.getExamCount();
+            that._getExamCount();
           }
         }
       }

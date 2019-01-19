@@ -12,6 +12,7 @@ class CourseList extends HTTP {
       method: 'POST'
     })
   }
+  
 }
 export {
   CourseList

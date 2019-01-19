@@ -69,7 +69,7 @@ Page({
   goOrder: function () {
     if (wx.getStorageSync("token")) {
       wx.navigateTo({
-        url: '../interviewrecord/interviewrecord',
+        url: '../myjob/myjob',
       })
     } else {
       util.isToken()

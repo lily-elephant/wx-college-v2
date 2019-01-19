@@ -1,5 +1,6 @@
 export const config = {
   api_base_url: "https://api.ukbg.cn/qualityLife/",
   imgeurl: "https://api.ukbg.cn/res",
-  versionCode: "version109"
+  versionCode: "version110",
+  errorok: 200
 }

@@ -74,6 +74,7 @@ Page({
   },
   // 点击购买
   buy(e) {
+    console.log(e)
     this.setData({
       payFlag: true,
       price: e.detail.price,
@@ -124,6 +125,7 @@ Page({
   },
   // 获取课程目录介绍及头图
   _getCatalogList() {
+    this.data.course = []
     this.data.loading = true;
     courseList.getCatalogList(this.data.ccid, this.data.pageindex, this.data.pagecount).then((res) => {
       this.data.loading = false;

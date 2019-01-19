@@ -1,0 +1,5 @@
+<view class="container">
+  <button open-type='share' class='send'>发送给朋友</button>
+  <button bindtap='sharePic'>生成海报</button>
+  <button bindtap='cancel' class='cancle'>取消</button>
+</view>

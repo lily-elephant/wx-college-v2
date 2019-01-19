@@ -1,3 +1,5 @@
+@import '../../asset/font/iconfont.wxss';
+
 .container{
   position: relative;
   line-height: 48rpx;
@@ -5,16 +7,21 @@
 }
 .back{
   position: absolute;
-  top: 20rpx;
-  left: 20rpx;
+  top: 10rpx;
+  left: 10rpx;
   padding: 4px;
   line-height: 1;
   text-indent: 0;
-  color: #999;
+  color: #fff;
+  background: #999;
+  border-radius: 2px;
+}
+.icon-arrow_l{
   font-size: 20px;
 }
 .text{
-  padding: 24rpx;
+  display: block;
+  padding: 0 24rpx 24rpx;
   text-align: justify;
 }
 .detail-img{
