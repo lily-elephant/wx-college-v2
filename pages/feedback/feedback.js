@@ -1,3 +1,6 @@
+import { MeModel } from '../../models/me.js'
+
+const meModel = new MeModel()
 var app = getApp()
 Page({
   data: {
@@ -18,34 +21,21 @@ Page({
     //console.log(e.detail.value)
   },
   // 提交
-  formSubmit: function(e){
+  formSubmit(e){
     if(e.detail.value.textarea){
-      var that = this
-      wx.request({
-        url: app.globalData.url + 'submitFeedback',
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          Token: wx.getStorageSync('token')
-        },
-        data: {
-          comment: that.data.val
-        },
-        success: function (res) {
-          console.log(res.data.data)
-          if (res.data.code == 200) {
-            wx.showToast({
-              title: '反馈成功'
-            })
-            wx.navigateBack({
-              delta: 1
-            })
-          } else {
-            wx.showToast({
-              title: res.data.message,
-              icon: "none"
-            })
-          }
+      meModel.submitFeedback(this.data.val).then(res => {
+        if (res.data.code == 200) {
+          wx.showToast({
+            title: '反馈成功'
+          })
+          wx.navigateBack({
+            delta: 1
+          })
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: "none"
+          })
         }
       })
     }else{

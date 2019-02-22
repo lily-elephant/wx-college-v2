@@ -6,6 +6,7 @@
     "v-page": "../../component/pagedetail/index",
     "v-state": "../../component/coursestate/index",
     "v-pay": "../../component/pay/index",
-    "v-share": "../../component/share/index"
+    "v-share": "../../component/share/index",
+    "v-loading": "../../component/loading/index"
   }
 }

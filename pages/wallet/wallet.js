@@ -1,8 +1,10 @@
-// pages/wallet/wallet.js
+import { MeModel } from '../../models/me.js'
+
+const meModel = new MeModel()
 var app = getApp() 
 Page({
   data: {
-    remaining: 500
+    remaining: 0
   },
 
   // 进入交易明细
@@ -22,26 +24,15 @@ Page({
    */
   onLoad: function (options) {
     this.getBalance()
-    var that = this 
-    that.setData({
+    this.setData({
       isOnline: wx.getStorageSync("isOnline")
     })
   },
-  getBalance: function () {
-    var that = this;
-    wx.request({
-      url: app.globalData.url + 'getbalance',    //不带token
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Token': wx.getStorageSync('token')
-      },
-      success: function (res) {
-        //console.log(res.data.data)
-        that.setData({
-          remaining: res.data.data / 100
-        })
-      }
+  getBalance() {
+    meModel.getRemaining().then(res => {
+      this.setData({
+        remaining: res.data.data / 100
+      })
     })
   },
 

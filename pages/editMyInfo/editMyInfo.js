@@ -1,5 +1,8 @@
+import { isNull } from '../../utils/common.js'
+import { MeModel } from '../../models/me.js'
+
+const meModel = new MeModel()
 const app = getApp();
-var util = require("../../utils/util.js");
 Page({
   data: {
     idcard:'',
@@ -137,7 +140,7 @@ Page({
     that.data.stand_describe = options.describe,
     that.data.username = options.username
     that.data.stand_salary = options.salary 
-    that.data.stand_nowsalary = options.nowsalary 
+    that.data.stand_nowsalary = options.nowsalary == 'undefined' ? '' : options.nowsalary 
     that.data.stand_workdate = options.workdate 
     that.setData({
       idcard: options.idcard,
@@ -152,7 +155,7 @@ Page({
       nativeplace: options.nativeplace,
       describe: options.describe,
       salary: options.salary,
-      nowsalary: options.nowsalary,
+      nowsalary: options.nowsalary == 'undefined' ? '' : options.nowsalary,
       workdate: options.workdate,
     })
   },
@@ -176,126 +179,43 @@ Page({
     })
   },
   isSubmit(){
-    var that = this 
-    if (that.data.idcard == ''){
-      wx.showToast({
-        title: '请填写身份证号',
-      })
-      return false ;
-    }
-    if (that.data.sex == '') {
-      wx.showToast({
-        title: '请填写性别',
-      })
-      return false;
-    }
-    if (that.data.salary == '') {
-      wx.showToast({
-        title: '请填写期望薪资',
-      })
-      return false;
-    }
-    if (that.data.nowsalary == '') {
-      wx.showToast({
-        title: '请填写当前薪资',
-      })
-      return false;
-    }
-    if (that.data.workdate == '') {
-      wx.showToast({
-        title: '请填写工作时间',
-      })
-      return false;
-    }
-    if (that.data.address3 == '') {
-      wx.showToast({
-        title: '请填写籍贯',
-      })
-      return false;
-    }
-    if (that.data.education == '') {
-      wx.showToast({
-        title: '请填写最高学历',
-      })
-      return false;
-    }
-    if (that.data.marry == '') {
-      wx.showToast({
-        title: '请填写婚育状况',
-      })
-      return false;
-    }
-    if (that.data.isdrive == '') {
-      wx.showToast({
-        title: '请填写有无驾驶证',
-      })
-      return false;
-    }
-    if (that.data.nativeplace == '') {
-      wx.showToast({
-        title: '请填写现居住地',
-      })
-      return false;
-    }
-    if (that.data.describe == '') {
-      wx.showToast({
-        title: '请填写工作经历',
-      })
-      return false;
-    }
-    if (that.data.brief == '') {
-      wx.showToast({
-        title: '请填写自我评价',
-      })
-      return false;
-    }
-    return true ;
-  },
-  lodaData(){
-    var that = this;
-    wx.request({
-      url: app.globalData.url + 'housekeeper/editHousekeeperInfo',  //不用判断token
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Token': wx.getStorageSync('token')
-      },
-      data: {
-        username:that.data.username,
-        idcard: that.data.idcard,
-        sex: that.data.sex,
-        marry:that.data.marry,
-        isdrive:that.data.isdrive,
-        address1: that.data.address1,
-        address2:that.data.address2,
-        address3:that.data.address3,
-        education: that.data.education,
-        brief: that.data.brief,
-        nativeplace: that.data.nativeplace,
-        describes: that.data.describe,
-        salary: that.data.salary,
-        nowsalary: that.data.nowsalary,
-        workdate: that.data.workdate
-      },
-      success: function (res) {
-        if(res.data.code == '200'){
-          wx.showToast({
-            title: '保存成功',
-          })
-          wx.navigateBack({
-            delta:1
-          })
-        }else{
-          wx.showToast({
-            title: '保存失败',
-          })
-        }
+    if (isNull(this.data.idcard, '请填写身份证号') && 
+      isNull(this.data.sex, '请填写性别') && 
+      isNull(this.data.salary, '请填写期望薪资') &&
+      isNull(this.data.nowsalary, '请填写当前薪资') &&
+      isNull(this.data.workdate, '请填写工作时间') &&
+      isNull(this.data.address3, '请填写籍贯') &&
+      isNull(this.data.education, '请填写最高学历') &&
+      isNull(this.data.marry, '请填写婚育状况') && 
+      isNull(this.data.isdrive, '请填写有无驾驶证') &&
+      isNull(this.data.nativeplace, '请填写现居住地') &&
+      isNull(this.data.describe, '请填写工作经历') &&
+      isNull(this.data.brief, '请填写自我评价')
+    ){
+        return true
+      }else{
+        return false
       }
-    }) 
   },
-  submit: function () {
+  save(){
+    meModel.saveInfo(this.data).then(res => {
+      if (res.data.code == '200') {
+        wx.showToast({
+          title: '保存成功',
+        })
+        wx.navigateBack({
+          delta: 1
+        })
+      } else {
+        wx.showToast({
+          title: '保存失败',
+        })
+      }
+    })
+  },
+  submit () {
     if (this.isSubmit()){
-      this.lodaData();
+      this.save();
     }
   },
   

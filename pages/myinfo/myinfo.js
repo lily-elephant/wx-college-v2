@@ -1,49 +1,36 @@
+import { MeModel } from '../../models/me.js'
+const meModel = new MeModel()
 var app = getApp()
 Page({
   data: {
     infos: []
   },
   // 点击信息
-  readTap: function (e) {
-    console.log(e.currentTarget.dataset)
-    var that = this
-    wx.request({
-      url: app.globalData.url + 'noticeIsRead',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        Token: wx.getStorageSync('token')
-      },
-      data: {
-        id: e.currentTarget.dataset.id,
-        type: e.currentTarget.dataset.type
-      },
-      success: function (res) {
-        console.log(res.data.data)
-        if (res.data.code == 200) {
-          that.data.infos[e.currentTarget.dataset.index].isread = 1;
-          that.setData({
-            infos: that.data.infos
-          })
-        }
-      }
-    })
-  },
-  onLoad: function (options) {
-    var that = this
-    wx.request({
-      url: app.globalData.url + 'myNotice',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        Token: wx.getStorageSync('token')
-      },
-      success: function (res) {
-        //console.log(res.data.data)
-        that.setData({
-          infos: res.data.data
+  readTap (e) {
+    let id = e.currentTarget.dataset.id,
+      types = e.currentTarget.dataset.type,
+      idx = e.currentTarget.dataset.index;
+    if(this.data.infos[idx].isread == 1){
+      return
+    }
+    meModel.onInfo(id, types).then(res => {
+      if (res.data.code == 200) {
+        this.data.infos[idx].isread = 1;
+        this.setData({
+          infos: this.data.infos
         })
       }
     })
+  },
+  // 获取列表
+  getInfo(){
+    meModel.getInfoList().then(res => {
+      this.setData({
+        infos: res.data.data
+      })
+    })
+  },
+  onLoad: function (options) {
+    this.getInfo();
   },
 })

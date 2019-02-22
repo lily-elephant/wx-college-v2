@@ -1,3 +1,4 @@
-<view wx:if="{{isOnline}}" class='{{isBuy ? "nobuy" : "buyed"}}' catchtap='pay' data-cid='{{cid}}' data-state='{{isBuy}}' data-price='{{price}}'>
-{{money == 0 ? "免费" : isBuy ? "购买" : "已购"}}
+<view wx:if="{{isOnline}}" class='{{isBuy!=0 ? "nobuy" : "buyed"}}' catchtap='pay' data-cid='{{cid}}' data-state='{{isBuy}}' data-price='{{price}}'>
+{{price == 0 ||price == "0.00" ? "免费" : isBuy!=0 ? "购买" : "已购"}}
 </view>
+<!-- isbuy: 1未购买 0 购买 0 false 1 true -->

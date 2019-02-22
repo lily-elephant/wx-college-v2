@@ -17,7 +17,7 @@
   <!-- 课程简介 -->
   <view class='course-info bordbd9'>
     <view class="btn-state">
-      <v-state is-online="{{isOnline}}" cid="{{course.cid}}" is-buy="{{course.isbuy}}" price="{{course.money}}" bind:pay="buy" />
+      <v-state tap-flag="{{false}}" is-online="{{isOnline}}" cid="{{course.cid}}" is-buy="{{course.isbuy}}" price="{{course.money}}" bind:pay="buy" />
     </view>
     <text class='course-name'>{{course.name}}<text wx:if="{{isOnline}}" class='fsdb'>￥{{course.money}}</text></text>
     <view class='course-desc fs66'>{{course.brief}}</view>
@@ -42,18 +42,25 @@
   </view>
 </view>
 <!-- 分享弹出层  -->
-<view class="layer-wrapper" wx:if="{{showModalStatus}}">
+<view class="layer-wrapper" hidden="{{!showModalStatus}}">
   <view animation="{{animationData}}" class="layer">
     <v-share course-picture='{{course.coursepicture}}' course-name='{{course.name}}' course-brief='{{course.brief}}' bind:cancelshare="cancelShare" bind:share="share" />
   </view>
 </view>
 <!-- 海报弹出框 -->
-<view class='canvas-wrapper' hidden='{{showCanvas}}'>
-  <image src='../../asset/img/close.png' class='close' bindtap='close'></image>
-  <canvas canvas-id="mycanvans" style="width:300px;height:300px;" />
-  <button class='save' bindtap='save'>保存到系统相册</button>
+<view class="layer-wrapper" hidden='{{showCanvas}}'>
+  <view class='canvas-wrapper'>
+    <image src='../../asset/img/close.png' class='close' bindtap='close'></image>
+    <canvas canvas-id="mycanvans" style="width:300px;height:300px;" />
+    <button class='save' bindtap='save'>保存到系统相册</button>
+  </view>
 </view>
+
 <!-- 充值弹出层 -->
 <view wx:if="{{payFlag}}">
   <v-pay price="{{course.money}}" cid="{{cid}}" bind:cancel="cancel" />
+</view>
+<!-- loading层 -->
+<view class="layer-wrapper" wx:if="{{loadingFlag}}">
+  <v-loading />
 </view>

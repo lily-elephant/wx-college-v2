@@ -10,7 +10,7 @@
       <view class="course-price">
           <text wx:if="{{isOnline}}" class="now-price">{{item.discount}}</text>
           <text wx:if="{{isOnline}}" class="old-price">{{item.price}}</text>
-          <button wx:if="{{item.iscanbuy == 1 && isOnline}}" class='priceBtn' catchtap='goBuy' data-ccid="{{item.ccid}}" data-discount='{{item.discount}}'>购买</button>
+          <button wx:if="{{item.discount!='0.00' && item.iscanbuy == 1 && isOnline}}" class='priceBtn' catchtap='goBuy' data-ccid="{{item.ccid}}" data-discount='{{item.discount}}'>购买</button>
       </view>
     </view>
   </view>

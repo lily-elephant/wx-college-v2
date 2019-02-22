@@ -1,3 +1,6 @@
+import { ExamModel } from '../../models/exam.js'
+
+const examModel = new ExamModel()
 var app = getApp()
 Page({
 
@@ -123,69 +126,37 @@ Page({
         }
       }
       var result = JSON.stringify(ben.sort(compare))
-      wx.request({
-        url: app.globalData.url + 'savePersonalityAnswerTwo',
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Token': wx.getStorageSync('token')
-        },
-        data: {
-          result: result
-        },
-        success: function (res) {
-          if (res.data.code == 200) {
-            wx.navigateBack({
-              delta: 1
-            })
-            wx.showToast({
-              title: '提交成功',
-            })
-          }
-        },
+      examModel.savePersonalityExamTwo(result).then(res => {
+        if (res.data.code == 200) {
+          wx.navigateBack({
+            delta: 1
+          })
+          wx.showToast({
+            title: '提交成功',
+          })
+        }
       })
     } else {
       wx.showToast({
         title: '请回答完整',
       })
     }
-
-
-
-
-
-
   },
   onLoad: function (options) {
-    var that = this;
-    that.loadData();
+    this.getExamList();
   },
   //加载测试数据
-  loadData: function () {
-    var that = this;
-    wx.request({
-      url: app.globalData.url + 'getSixteenTest',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Token': wx.getStorageSync('token')
-      },
-      success: function (res) {
-        //console.log(res.data.data)
-        if (res.data.data != undefined) {
-          that.setData({
-            list: res.data.data
-          })
-
-        } else {
-          wx.showToast({
-            title: '没有更多数据',
-          })
-        }
-      },
+  getExamList() {
+    examModel.getPersonalityExamTwo().then(res => {
+      if (res.data.data) {
+        that.setData({
+          list: res.data.data
+        })
+      } else {
+        wx.showToast({
+          title: '没有更多数据',
+        })
+      }
     })
   },
-
-
-
 })

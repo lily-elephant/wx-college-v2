@@ -1,28 +1,23 @@
-.info-wrapper{
-  height: 64rpx;
-}
-.me-btn{
-  white-space: nowrap;
-}
-
 .me-top{
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   padding: 30rpx 40rpx;
 }
 .avatar-wrapper{
   flex: 0 0 150rpx;
   height: 150rpx;
-  border: 4rpx solid #eee;
-  border-radius: 50%;
   overflow: hidden;
 }
 .avatar{
   display: block;
   width: 150rpx;
   height: 150rpx;
+  border: 4rpx solid #eee;
+  border-radius: 50%;
 }
 .me-info{
-  padding-left: 26rpx;
+  padding-left: 24rpx;
   width: 100%;
   box-sizing: border-box;
   color: #fff;

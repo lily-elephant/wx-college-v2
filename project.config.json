@@ -12,7 +12,7 @@
 		"nodeModules": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.5.0",
+	"libVersion": "2.6.0",
 	"appid": "wxdd268f672e8306c0",
 	"projectname": "butter12051407",
 	"isGameTourist": false,

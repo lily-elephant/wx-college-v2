@@ -1,5 +1,9 @@
 var app = getApp()
 var util = require("../../utils/util.js");
+import { MeModel } from '../../models/me.js';
+
+const meModel = new MeModel();
+
 Page({
   data: {
     name: '', // 雇主姓名
@@ -98,7 +102,7 @@ Page({
   goChangepwd: function () {
     if (wx.getStorageSync("token")) {
       wx.navigateTo({
-        url: '../identify/identify?code=2',
+        url: '../identify/identify?registertype=2',
       })
     } else {
       util.isToken()
@@ -141,37 +145,20 @@ Page({
   },
   //获取用户基本信息
   auth: function () {
-    var that = this
-    wx.request({
-      url: app.globalData.url + 'auth',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-         'Token': wx.getStorageSync('token')
-      },
-      success: function (res) {
-        if (res.data.code == 200) {
-          if (res.data.data.headimageurl != null) {
-            that.data.imgUrl = that.data.globalimgeurl + res.data.data.headimageurl
-          }
-          that.setData({
-            name: res.data.data.name,
-            phoneNum: res.data.data.username,
-            imgUrl: that.data.imgUrl,
-            isShow: that.data.isShow
-          })
-          if (res.data.data.headimageurl == null ){
-            that.setData({
-              imgUrl: '../../asset/img/logo.png',
-            })
-          }
-        } else {
-          wx.showToast({
-            title: res.data.message,
-            icon: "none"
-          })
-        }
+    meModel.getAuth().then(res => {
+      if (res.data.data.headimageurl) {
+        this.data.imgUrl = this.data.globalimgeurl + res.data.data.headimageurl
+      }else{
+        that.setData({
+          imgUrl: '../../asset/img/logo.png',
+        })
       }
+      this.setData({
+        name: res.data.data.name,
+        phoneNum: res.data.data.username,
+        imgUrl: this.data.imgUrl,
+        isShow: this.data.isShow
+      })
     })
   } 
 })

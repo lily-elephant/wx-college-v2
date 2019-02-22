@@ -1,5 +1,5 @@
 .container{
-  padding: 0 40rpx;
+  padding: 0 24rpx;
 }
 .item{
   padding: 36rpx 0 36rpx 20rpx;

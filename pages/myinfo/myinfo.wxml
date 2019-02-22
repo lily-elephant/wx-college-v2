@@ -1,3 +1,4 @@
+<wxs src="../../utils/filter.wxs" module="util" />
 <!-- 没有数据 -->
 <view class='nodata align-c fs99' wx:if="{{infos&&infos.length==0}}">
   <view class='nodata-tips gap-350'>暂无数据</view>
@@ -8,8 +9,8 @@
     <image src='../../asset/img/info.png' class='info-icon'></image>
     <view class='item-content {{item.isread==0 ? "" : "read"}}'>
       <view class='item-title'>{{item.title}}</view>
-      <view class='item-desc fs66'>{{item.content}}</view>
-      <text class='item-time fs99'>{{item.create_time}}</text>
+      <text class='item-desc fs66' decode="{{true}}">{{item.content}}</text>
+      <text class='item-time fs99'>{{util.substr(item.create_time)}}</text>
     </view>
   </view>
 </view>

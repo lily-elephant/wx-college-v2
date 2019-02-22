@@ -1,6 +1,8 @@
+import { ExamModel } from '../../models/exam.js'
+
+const examModel = new ExamModel()
 var app = getApp()
 Page({
-
   data: {
     answerList: []
   },
@@ -18,7 +20,7 @@ Page({
     console.log(this.data.answerList)
   },
 
-  submit: function() {
+  submit() {
     var a  = 0 ;
     var b  = 0;
     var c  = 0;
@@ -85,69 +87,38 @@ Page({
         }
       }
       var result = JSON.stringify(ben.sort(compare))
-      wx.request({
-        url: app.globalData.url + 'savePersonalityAnswer',
-        method: 'POST',
-        header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'Token': wx.getStorageSync('token')
-        },
-        data: {
-          result: result
-        },
-        success: function (res) {
-          if (res.data.code == 200) {
-            wx.navigateBack({
-              delta: 1
-            })
-            wx.showToast({
-              title: '提交成功',
-            })
-          }
-        },
+      examModel.savePersonalityExam(result).then(res => {
+        if (res.data.code == 200) {
+          wx.navigateBack({
+            delta: 1
+          })
+          wx.showToast({
+            title: '提交成功',
+          })
+        }
       })
     }else{
       wx.showToast({
         title: '请回答完整',
       })
     }
-    
-    
-    
-    
-
-    
   },
   onLoad: function(options) {
-    var that = this;
-    that.loadData();
+    this.getExamList();
   },
   //加载测试数据
-  loadData: function() {
-    var that = this;
-    wx.request({
-      url: app.globalData.url + 'getPersonalityTest',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Token': wx.getStorageSync('token')
-      },
-      success: function(res) {
-        //console.log(res.data.data)
-        if (res.data.data != undefined) {
-          that.setData({
-            list: res.data.data
-          })
+  getExamList() {
+    examModel.getPersonalityExam().then(res => {
+      if (res.data.data) {
+        this.setData({
+          list: res.data.data
+        })
 
-        } else {
-          wx.showToast({
-            title: '没有更多数据',
-          })
-        }
-      },
+      } else {
+        wx.showToast({
+          title: '没有更多数据',
+        })
+      }
     })
   },
-
-
-
 })

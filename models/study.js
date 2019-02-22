@@ -1,11 +1,11 @@
 import {HTTP} from '../utils/http.js'
 
 class StudyModel extends HTTP{
-  getPayedList(isbuy){
+  getPayedList(isbuy, pageindex){
     return this.request({
       url: 'getHKOrderList',
       data: {
-        pageindex: 1,
+        pageindex: pageindex,
         pagecount: 10,
         isbuy: isbuy
       },

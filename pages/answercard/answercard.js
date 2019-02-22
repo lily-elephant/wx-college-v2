@@ -91,9 +91,6 @@ Page({
         showSubmit: true
       })
     }
-
-    
-
   },
   // 点击多选
   checkboxChange: function(e) {

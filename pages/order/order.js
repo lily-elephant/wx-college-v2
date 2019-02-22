@@ -14,34 +14,47 @@ Page({
     payFlag: false,
     price: null,
     payList: [],
+    pageindex: 1,
+    loading: false,
   },
   // tab切换
+  getHistory(){
+    var that = this;
+    wx.getStorage({
+      key: 'visited',
+      success: function (res) {
+        console.log(res, 'res')
+        console.log(res.data, 'resdata')
+        let arr = [];
+        // res.data.forEach(data => {
+        //   data.films.forEach((item) => {
+        //     arr.unshift(item.data)
+        //   })
+        // })
+        res.data[0].films.forEach((item) => {
+          arr.unshift(item.data)
+        })
+        that.setData({
+          historyArr: arr
+        })
+        console.log(that.data.historyArr)
+      },
+      fail: function (res) {
+        console.log(res.data)
+        wx.showToast({
+          title: '您还没有浏览记录',
+          icon: 'none'
+        })
+      }
+    })
+  },
   tabsHandle: function(e){
     let that = this;
     that.setData({
       currentTab: e.currentTarget.dataset.idx
     })
     if(that.data.currentTab == 1){
-      wx.getStorage({
-        key: 'visited',
-        success: function (res) {
-          let arr = [];
-          res.data[0].films.forEach((item) => {
-            arr.unshift(item.data)
-          })
-          that.setData({
-            historyArr: arr
-          })
-          console.log(that.data.historyArr)
-        },
-        fail: function (res) {
-          console.log(res.data)
-          wx.showToast({
-            title: '您还没有浏览记录',
-            icon: 'none'
-          })
-        }
-      })
+      this.getHistory();
     }
   },
   // 点击购买
@@ -70,26 +83,45 @@ Page({
     that.setData({
       isLogin:wx.getStorageSync('token')
     })
+    // this.getHistory()
   },
   //加载订单
   getOrderList(isbuy){
     if (wx.getStorageSync("token")) {
-      studyModel.getPayedList(isbuy).then(res => {
+      this.data.loading = true;
+      studyModel.getPayedList(isbuy,this.data.pageindex).then(res => {
         if (res.data.code == 200){
-          if (res.data.data != null) {
-            for (var i = 0; i < res.data.data.length; i++) {
-              res.data.data[i].create_time = res.data.data[i].create_time.substring(0, res.data.data[i].create_time.length - 2)
-              res.data.data[i].update_time = res.data.data[i].update_time.substring(0, res.data.data[i].update_time.length - 2)
-            }
-          }
+          this.data.loading = false;
+          this.data.count = res.data.count;
+          let list = res.data.data;
+          this.data.finishList = this.data.finishList.concat(list)
           this.setData({
-            finishList: res.data.data
+            finishList: this.data.finishList
           })
         }
       })
     } else {
       wx.showToast({
         title: '您还未登录',
+      })
+    }
+  },
+  onPullDownRefresh() {
+    this.data.pageindex = 1;
+    this.data.finishList = []
+    this.getOrderList();
+  },
+  onReachBottom() {
+    if (this.data.loading) {
+      return
+    }
+    if (this.data.finishList.length < this.data.count) {
+      this.data.pageindex += 1
+      this.getOrderList()
+    } else {
+      wx.showToast({
+        title: '没有更多数据',
+        icon: 'none'
       })
     }
   },

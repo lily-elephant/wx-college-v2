@@ -1,0 +1,16 @@
+var format = function (val) {
+  if (val) {
+    var reg = getRegExp("\\n", "g");
+    return val.replace(reg, '\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+  }
+}
+
+var substr = function(val) {
+  if(val){
+    return val.substring(0, val.length-2)
+  }
+}
+module.exports = {
+  format: format,
+  substr: substr
+}

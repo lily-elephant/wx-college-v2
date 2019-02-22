@@ -33,12 +33,12 @@ function countdown(that) {
   }, 1000)
 }
 
-function getDate() {
+function getToday() {
   var time = new Date()
   var year = time.getFullYear()
-  var month = time.getMonth()
+  var month = time.getMonth()+1
   month = month < 10 ? '0' + month : month
-  var day = time.getDay()
+  var day = time.getDate()
   day = day < 10 ? '0' + day : day
   return [year, month, day].join('-')
 }
@@ -61,7 +61,7 @@ function isToken(){
 }
 module.exports = {
   countdown: countdown,
-  getDate: getDate,
+  getToday: getToday,
   getTime: getTime,
   isToken: isToken,
   formatTime: formatTime

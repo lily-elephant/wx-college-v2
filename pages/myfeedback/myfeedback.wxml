@@ -1,3 +1,4 @@
+<wxs src="../../utils/filter.wxs" module="util" />
 <!-- 没有数据 -->
 <view class='nodata align-c fs99' wx:if="{{list&&list.length==0}}">
   <view class='nodata-tips gap-350'>暂无数据</view>
@@ -7,11 +8,11 @@
   <view class='item' wx:for="{{list}}" wx:key='index'>
     <view class='item-main'>
       <view class='bordbd9 fs99 align-r item-time'>
-        <text class='f-left item-time-cap'>反馈时间</text>{{item.create_time}}</view>
-      <view class='item-feedback'>{{item.comment}}</view>
+        <text class='f-left item-time-cap'>反馈时间</text>{{util.substr(item.create_time)}}</view>
+      <text decode="{{true}}" class='item-feedback'>{{item.comment}}</text>
       <view class='item-reply' wx:if="{{item.reply}}">
         <text class='red'>{{item.replyer}}</text>
-        <view class='reply-desc'>{{item.reply}}</view>
+        <text decode="{{true}}" class='reply-desc'>{{item.reply}}</text>
       </view>
     </view>
     <view class='bar'></view>

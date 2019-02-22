@@ -1,6 +1,6 @@
 // pages/coursedetail/coursedetail.js
 import { CourseModel } from '../../models/course.js'
-import { getDate, getTime } from '../../utils/util.js'
+import { getToday, getTime } from '../../utils/util.js'
 const courseModel = new CourseModel();
 const app = getApp();
 Page({
@@ -16,6 +16,8 @@ Page({
     videoContext:'',
     privilege: '登录',
     cid:null,
+    loadingFlag: false, //加载中
+    showModalStatus: false,
   },
   // 购买
   buy(){
@@ -30,6 +32,10 @@ Page({
   },
   // 生成海报
   share(e) {
+    this.setData({
+      showModalStatus: false,
+      loadingFlag: true,
+    })
     console.log(e)
     var name = e.detail.name;
     var brief = e.detail.brief;
@@ -94,6 +100,9 @@ Page({
               destHeight: 300,
               canvasId: 'mycanvans',
               success: function (res) {
+                that.setData({
+                  loadingFlag: false
+                })
                 console.log("get tempfilepath(success) is:",)
                 that.data.tempFilePath = res.tempFilePath
               },
@@ -182,7 +191,7 @@ Page({
         // 如果token存在，即已登录状态，才储存浏览历史
         if (wx.getStorageSync("token")){
           let that = this
-          let date = getDate()
+          let date = getToday()
           let time = getTime()
           let historyArr = []
           if (!wx.getStorageSync('visited')) {
@@ -196,7 +205,7 @@ Page({
               films: []
             }
             sub_data.films.push(now_data)
-            historyArr.push(sub_data)
+            historyArr.unshift(sub_data)
             wx.setStorage({
               key: 'visited',
               data: historyArr,
@@ -226,7 +235,7 @@ Page({
               sub_data.films.push(now_data)
               if (historyArr.length == 0) { // 判断是否为空
                 console.log('----为空插入----')
-                historyArr.push(sub_data)
+                historyArr.unshift(sub_data)
               } else if ((historyArr[0].date == date)) { //判断第一个是否为今天
                 console.log('----今日插入----')
                 console.log(historyArr[0].films.length)
@@ -239,7 +248,7 @@ Page({
                 historyArr[0].films.push(now_data)
               } else { // 不为今天(昨天)插入今天的数据
                 console.log('----昨日插入今日----')
-                historyArr.push(sub_data)
+                historyArr.unshift(sub_data)
               }
               wx.setStorage({
                 key: 'visited',

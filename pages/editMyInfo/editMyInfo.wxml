@@ -19,7 +19,7 @@
 
 <view class="section clearfix">
     <view class="section__title" >当前薪资</view>
-    <view class='inp-wrapper'><input type='number' class='inputTxt' placeholder='填写当前薪资' name="input" bindinput='listenernowSalaryInput' value='{{nowsalary=="null"?"请填写":nowsalary}}' /></view>
+    <view class='inp-wrapper'><input type='number' class='inputTxt' placeholder='填写当前薪资' name="input" bindinput='listenernowSalaryInput' value='{{!(!!nowsalary)?"":nowsalary}}' /></view>
   </view>
 
   <view class="section clearfix">
@@ -81,10 +81,6 @@
     <view class="section__title">工作经历</view>
     <textarea class='self-estimate' placeholder='填写工作经历' name="input" bindinput='listenerDescribeInput' value='{{describe=="null"?"请填写":describe}}' />
   </view>
-
-  
-
-
   <view class="section clearfix">
     <view class="section__title">自我评价</view>
     <textarea class='self-estimate' placeholder='填写自我评价' name="input" bindinput='listenerDesInput' value='{{brief=="null"?"请填写":brief}}' />

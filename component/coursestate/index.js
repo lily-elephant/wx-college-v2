@@ -4,6 +4,10 @@ Component({
    * 组件的属性列表
    */
   properties: {
+    tapFlag: {
+      type: Boolean,
+      value: true,
+    },
     isOnline:{
       type: Boolean,
       value: true
@@ -37,10 +41,13 @@ Component({
       const price = this.properties.price
       const state = this.properties.isBuy
       const cid = this.properties.cid
-      if (price == 0 || state == 0 || !state) {
+      if ((price == 0 || state == 0 || !state) && this.properties.tapFlag) {
         wx.navigateTo({
           url: '../coursedetail/coursedetail?cid=' + cid
         })
+        return
+      }
+      if (price == 0 && !this.properties.tapFlag){
         return
       }
       this.triggerEvent('pay', e.currentTarget.dataset)

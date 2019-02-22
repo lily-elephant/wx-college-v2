@@ -1,14 +1,14 @@
+<wxs src="../../utils/filter.wxs" module="util" />
+
 <view class="container">
   <view class="back" bindtap="back" hidden="{{hidden}}">
-    <text class="iconfont icon-arrow_l"></text>
+    <text class="iconfont icon-close"></text>
   </view>
   <view wx:for="{{pageDetail}}" wx:key="index" wx:for-index="index">
     <view wx:if="{{item.type == 'picture'}}">
       <image src='{{globalimgeurl}}{{item.path}}' mode='widthFix' class="detail-img"></image>
     </view>
-    <text decode="{{true}}" class="text" wx:elif="{{item.type == 'text'}}">
-      {{item.text}}
-    </text>
+    <text decode="{{true}}" class="content" wx:elif="{{item.type == 'text'}}">{{util.format(item.text)}}</text>
     <view wx:elif="{{item.type == 'video'}}">
       <video id="myVideo" src="{{globalimgeurl}}{{item.path}}" binderror="listenerVideo"></video>
     </view>
@@ -16,3 +16,14 @@
   <slot name="pay"></slot>
 </view>
 <!-- 可应用wxs -->
+<!-- <wxs module="util">
+  var format = function(val){
+    if(val){
+      var reg = getRegExp("\\n", "g");
+      return val.replace(reg, '\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+    }
+  }
+  module.exports = {
+    format:format
+  }
+</wxs> -->

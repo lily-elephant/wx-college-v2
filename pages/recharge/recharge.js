@@ -1,4 +1,6 @@
-// pages/recharge/recharge.js
+import { MeModel } from '../../models/me.js'
+
+const meModel = new MeModel()
 var app = getApp() 
 Page({
   data: {
@@ -21,20 +23,10 @@ Page({
     this.getChargePropertices() 
   },
   getChargePropertices:function(){
-    var that = this 
-    wx.request({
-      url: app.globalData.url + 'getChargePropertices',
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Token': wx.getStorageSync('token')
-      },
-      success: function (res) {
-        console.log(res.data.data)
-        that.setData({
-          list: res.data.data
-        })
-      },
+    meModel.getMoneyList().then(res => {
+      this.setData({
+        list: res.data.data
+      })
     })
   },
   gocharge:function(){
@@ -54,52 +46,34 @@ Page({
               code: res.code
             },
             success: function (res) {
-              var openid = res.data.openid;
-              wx.request({
-                url: app.globalData.url + 'wxPay',
-                method: 'POST',
-                header: {
-                  'content-type': 'application/x-www-form-urlencoded',
-                  'Token': wx.getStorageSync('token')
-                },
-                data: {
-                  openid: openid,
-                  money: that.data.money * 100 ,
-                  productBrief: "充值",
-                  transactionid: '0',
-                  businesstype: '充值',
-                  osid: '0',
-                },
-                success: function (res) {
-                  console.log(res.data.data)
-                  var data = res.data.data
-                  //console.log(JSON.parse(res.data.data))
-                  var orderNumber = res.data.ordernumber
-                  wx.requestPayment({
-                    'timeStamp': data.timeStamp,
-                    'nonceStr': data.nonceStr,
-                    'package': data.package,
-                    'signType': 'MD5',
-                    'paySign': data.paySign,
-                    'success': function (res) {
-                      //console.log(res, 1111111111111);
-                      wx.showToast({
-                        title: '充值成功',
-                      })
-                      wx.navigateBack({
-                        delta:1
-                      })
-                    },
-                    'fail': function (res) {
-                      //console.log(res, 222222222);
-                      wx.showToast({
-                        title: '取消支付',
-                        icon:null
-                      })
-                    }
+              let openid = res.data.openid;
+              meModel.getPay(openid, that.data.money).then(res => {
+                let data = res.data.data
+                let orderNumber = res.data.ordernumber
+                wx.requestPayment({
+                  'timeStamp': data.timeStamp,
+                  'nonceStr': data.nonceStr,
+                  'package': data.package,
+                  'signType': 'MD5',
+                  'paySign': data.paySign,
+                  'success': function (res) {
+                    //console.log(res, 1111111111111);
+                    wx.showToast({
+                      title: '充值成功',
+                    })
+                    wx.navigateBack({
+                      delta: 1
+                    })
+                  },
+                  'fail': function (res) {
+                    //console.log(res, 222222222);
+                    wx.showToast({
+                      title: '取消支付',
+                      icon: null
+                    })
+                  }
 
-                  });
-                }
+                });
               })
             },
             fail: function (err) {

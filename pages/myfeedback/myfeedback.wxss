@@ -13,6 +13,7 @@
   font-size: 30rpx;
 }
 .item-feedback{
+  display: block;
   padding: 30rpx;
   line-height: 40rpx;
   text-align: justify;
@@ -23,6 +24,7 @@
   border-top: 1rpx solid #d9d9d9;
 }
 .reply-desc{
+  display: block;
   padding: 20rpx 30rpx 0;
   line-height: 40rpx;
 }

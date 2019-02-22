@@ -3,26 +3,24 @@
 .container{
   position: relative;
   line-height: 48rpx;
-  text-indent: 2em;
+  padding-bottom: 200rpx;
 }
 .back{
-  position: absolute;
-  top: 10rpx;
-  left: 10rpx;
+  position: fixed;
+  bottom: 60rpx;
+  left: 50%;
+  margin-left: -56rpx;
   padding: 4px;
-  line-height: 1;
-  text-indent: 0;
-  color: #fff;
-  background: #999;
-  border-radius: 2px;
 }
-.icon-arrow_l{
-  font-size: 20px;
+.icon-close{
+  color: rgb(187, 229, 243);
+  font-size: 112rpx;
 }
-.text{
+.content{
   display: block;
-  padding: 0 24rpx 24rpx;
+  padding: 0 24rpx;
   text-align: justify;
+  text-indent: 56rpx;
 }
 .detail-img{
   display: block;

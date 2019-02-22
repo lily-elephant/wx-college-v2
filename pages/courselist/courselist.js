@@ -12,7 +12,7 @@ const app = getApp();
 Page({
   data: {
     globalimgeurl: app.globalData.imgeurl,
-    pagecount: 2,
+    pagecount: 10,
     pageindex: 1,
     course: [],
     payFlag: false,
@@ -100,7 +100,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this._getCatalogList();
+    this.onPullDownRefresh();
   },
   // 监听用户下拉动作
   onPullDownRefresh() {
@@ -125,7 +125,6 @@ Page({
   },
   // 获取课程目录介绍及头图
   _getCatalogList() {
-    this.data.course = []
     this.data.loading = true;
     courseList.getCatalogList(this.data.ccid, this.data.pageindex, this.data.pagecount).then((res) => {
       this.data.loading = false;
