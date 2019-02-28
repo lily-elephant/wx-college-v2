@@ -1,4 +1,7 @@
 // pages/answercard/answercard.js
+import { ExamModel } from '../../models/exam.js'
+
+const examModel = new ExamModel()
 const app = getApp();
 Page({
   data: {
@@ -26,52 +29,36 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var that = this;
-    that.loadQuestion(options);
-    //console.log(options)
+    this.loadQuestion(options);
   },
   // 请求试题数据方法
-  loadQuestion: function(options) {
-    //请求数据方法
-    let that = this;
-    wx.request({
-      url: app.globalData.url + 'exam/examlistaaa',
-      data: {
-        ccid: options.ccid,
-        name: '',
-        ismust: ''
-      },
-      method: 'POST',
-      header: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'Token': wx.getStorageSync('token')
-      },
-      success: function(res) {
-        that.data.list = res.data.data
-        for (let i = 0; i < that.data.list.length; i++) {
-          that.data.totalScore = that.data.totalScore + parseInt(that.data.list[i].score)
-          if (that.data.list[i].examtype == 'SINGLE') {
-            that.data.singleCount += 1;
-          } else if (that.data.list[i].examtype == 'MULTIPLE') {
-            that.data.mulCount += 1;
-          }
-          that.setData({
-            ccid: options.ccid,
-            count: options.count,
-            singleCount: that.data.singleCount,
-            mulCount: that.data.mulCount,
-            job: options.name,
-            totalScore: that.data.totalScore
-          })
+  loadQuestion(options) {
+    examModel.getExamData(options.ccid).then(res => {
+      this.data.list = res.data.data
+      for (let i = 0; i < this.data.list.length; i++) {
+        this.data.totalScore = this.data.totalScore + parseInt(this.data.list[i].score)
+        if (this.data.list[i].examtype == 'SINGLE') {
+          this.data.singleCount += 1;
+        } else if (this.data.list[i].examtype == 'MULTIPLE') {
+          this.data.mulCount += 1;
         }
-        that.setData({
-          list: that.data.list,
+        this.setData({
+          ccid: options.ccid,
+          count: options.count,
+          singleCount: this.data.singleCount,
+          mulCount: this.data.mulCount,
+          job: options.name,
+          totalScore: this.data.totalScore
         })
       }
+      this.setData({
+        list: this.data.list,
+      })
     })
   },
   // 点击单选按钮
   radioChange(e) { // 0 S 1 M
+    console.log(e)
     for (let i = 0; i < this.data.answerList.length; i++) {
       if (this.data.answerList[i].eid == e.currentTarget.dataset.eid) {
         this.data.answerList.splice(i, 1)
@@ -115,7 +102,7 @@ Page({
     }
   },
   // 答题卡提交并查看结果 
-  submit: function() {
+  submit() {
     var that = this;
     for (let i = 0; i < that.data.arr.length; i++) {
       if (that.data.arr[i]['eid'] == undefined) {
@@ -129,9 +116,8 @@ Page({
     that.submitAnswer();
   },
   //提交答案
-  submitAnswer: function() {
+  submitAnswer() {
     var that = this;
-    //console.log()
     if (that.data.answerList.length == that.data.count ) {
       wx.showModal({
         title: '提示',
@@ -139,48 +125,16 @@ Page({
         confirmText: '确认',
         success: function(res) {
           if (res.confirm) {
-            wx.request({
-              url: app.globalData.url + 'exam/addresults',
-              method: 'POST',
-              header: {
-                'content-type': 'application/x-www-form-urlencoded',
-                'Token': wx.getStorageSync('token')
-              },
-              data: {
-                answer: JSON.stringify(that.data.answerList)
-              },
-              success: function(res) {
-                if (res.data.code == 200) {
-                  wx.showToast({
-                    title: '交卷成功！'
-                  })
-                  wx.request({
-                    url: app.globalData.url + 'exam/getEaxmRecord',
-                    method: 'POST',
-                    header: {
-                      'content-type': 'application/x-www-form-urlencoded',
-                      'Token': wx.getStorageSync('token')
-                    },
-                    data: {
-                      ccid: that.data.ccid
-                    },
-                    success: function(res) {
-                      if (res.data.code == 200) {
-                        let score = res.data.data[0]['score'];
-                        let name = res.data.data[0]['name'];
-                        wx.navigateTo({
-                          url: '/pages/result/result?score=' + score + '&name=' + 'name'
-                        })
-                      }
-                    }
-                  })
-                }
+            let answer = JSON.stringify(that.data.answerList)
+            examModel.submitExam(answer).then(res => {
+              if (res.data.code == 200) {
+                wx.showToast({
+                  title: '交卷成功！'
+                })
+                that._getExamRecord(that.data.ccid)
               }
             })
           }
-          //else if (res.cancel) {
-          //that.animationFn('100%');
-          //}
         }
       })
     }else{
@@ -190,10 +144,17 @@ Page({
       })
     }
   },
-  // 点击交卷
-  submitExam: function() {
-    var that = this;
-    that.submitAnswer();
+  // 获取交卷记录
+  _getExamRecord(ccid){
+    examModel.getExamRecord(ccid).then(res => {
+      if (res.data.code == 200) {
+        let score = res.data.data[0]['score'];
+        let name = res.data.data[0]['name'];
+        wx.navigateTo({
+          url: '/pages/result/result?score=' + score + '&name=' + 'name'
+        })
+      }
+    })
   },
   // 点击上一题
   prevQue: function() {
@@ -211,10 +172,10 @@ Page({
       that.setData({
         prevFlag: false
       })
-      wx.showToast({
-        title: '没有上一题',
-        icon:"none"
-      })
+      // wx.showToast({
+      //   title: '没有上一题',
+      //   icon:"none"
+      // })
     }
   },
   // 点击下一题
@@ -233,10 +194,6 @@ Page({
           isNext = true;
         } 
       }
-      // if (){
-
-      // }
-      //that.data.list[that.data.currentIndex]
       if (!isNext) {
         wx.showToast({
           title: '请作答后再尝试',
@@ -262,7 +219,6 @@ Page({
           icon: "none"
         })
       }
-      
     }
     if (that.data.currentIndex == _len - 1) {
       that.setData({
@@ -344,8 +300,5 @@ Page({
         icon:'none'
       })
     }
-    
-
   }
-
 })

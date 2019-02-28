@@ -46,7 +46,7 @@
     <text class='iconfont icon-datika'></text>
     答题卡
   </view>
-  <view class='item {{!showSubmit ? "gray" : ""}}' bindtap='submitExam'>
+  <view class='item {{!showSubmit ? "gray" : ""}}' bindtap='submitAnswer'>
     <text class='iconfont icon-submit'></text>
     交卷
   </view>

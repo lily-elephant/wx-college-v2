@@ -30,6 +30,26 @@ Page({
       payFlag: false
     })
   },
+  // 保存到系统相册
+  save() {
+    var that = this
+    //将图片保存在系统相册中(应先获取权限，)
+    wx.saveImageToPhotosAlbum({
+      filePath: that.data.tempFilePath,
+      success(res) {
+        that.setData({
+          showCanvas: true,
+          // sharebtn: true
+        })
+        wx.showToast({
+          title: '保存成功',
+        })
+      },
+      fail: function () {
+        //console.log("save photo is fail")
+      }
+    })
+  },
   // 生成海报
   share(e) {
     this.setData({
@@ -47,16 +67,21 @@ Page({
       success: function(res) {
         console.log(res)
         let briefArray = [];
+        let _brief = '';
         //为了防止过长，分割字符串,每行18个
-        for (let i = 0; i < brief.length / 18; i++) {
-          if (i > 2) {
-            break;
-          }
-          if(i == 2 ){
-            briefArray.push(brief.substr(i * 18, 18) + "...");
-          }else{
-            briefArray.push(brief.substr(i * 18, 18));
-          }
+        if (brief.length >= 36){
+          _brief = brief.substr(0, 33) + '...'
+        }
+        for (let i = 0; i < _brief.length / 18; i++) {
+          briefArray.push(_brief.substr(i * 18, 18));
+          // if (i > 2) {
+          //   break;
+          // }
+          // if(i == 2 ){
+          //   briefArray.push(brief.substr(i * 18, 15) + "...");
+          // }else{
+          //   briefArray.push(brief.substr(i * 18, 18));
+          // }
         }
 
         if (res.statusCode === 200) {
